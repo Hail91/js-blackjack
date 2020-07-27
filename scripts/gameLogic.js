@@ -34,7 +34,24 @@ class Deck {
       numDecks += 1;
     }
   }
+  // Add methods to Deck class here
+  shuffle() {
+    // Same as const deck = this.deck
+    const { deck } = this;
+    // Original position
+    let original = deck.length;
+    // New position
+    let randomized;
+    // Need a loop that counts down from original deck length to zero and performs a shuffle on each card.
+    while (original) {
+      randomized = Math.floor(Math.random() * original--);
+      // Perform swap
+      [deck[original], deck[randomized]] = [deck[randomized], deck[original]];
+    }
+    return this;
+  }
 }
 
 const newDeck = new Deck();
-console.log(newDeck.deck.length);
+newDeck.shuffle();
+console.log(newDeck.deck);
