@@ -1,5 +1,4 @@
-const Deck = require("./gameDeck");
-// Player logic here, will need to bring in gameDeck.js as well
+// Player logic here
 ("use strict");
 
 class Player {
@@ -8,3 +7,5 @@ class Player {
     this.hand = [];
   }
 }
+
+module.exports = Player;
