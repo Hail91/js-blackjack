@@ -1,5 +1,7 @@
 "use strict";
-
+// Need to bring in Player and Dealer.
+const dealer = require("./dealer");
+const player = require("./player");
 // Should initialize the deck as an array and populate with cards. (Gonna roll with Object Oriented Paradigm for this)
 class Deck {
   constructor() {
@@ -55,5 +57,8 @@ class Deck {
     return this.deck.pop();
   }
 }
+
+console.log(dealer);
+console.log(player);
 
 module.exports = Deck;

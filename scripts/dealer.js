@@ -1,3 +1,11 @@
-// Dealer logic here, will need to bring in gameDeck.js as well
-
+// Dealer logic here
 "use strict";
+
+class Dealer {
+  constructor() {
+    this.name = "Dealer";
+    this.hand = [];
+  }
+}
+
+module.exports = Dealer;
