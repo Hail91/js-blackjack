@@ -4,7 +4,6 @@
 class Deck {
   constructor() {
     this.deck = [];
-
     // Suits Array
     const suits = ["spades", "clubs", "diamonds", "hearts"];
     // Values Array
@@ -51,8 +50,10 @@ class Deck {
     // Return reference to deck
     return this;
   }
+  // Deal method
+  deal() {
+    return this.deck.pop();
+  }
 }
 
-const newDeck = new Deck();
-newDeck.shuffle();
-console.log(newDeck.deck);
+module.exports = Deck;
