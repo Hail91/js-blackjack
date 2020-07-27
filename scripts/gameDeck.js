@@ -48,6 +48,7 @@ class Deck {
       // Perform swap
       [deck[original], deck[randomized]] = [deck[randomized], deck[original]];
     }
+    // Return reference to deck
     return this;
   }
 }
