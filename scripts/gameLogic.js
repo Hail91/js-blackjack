@@ -72,7 +72,8 @@ class Deck {
 function hit(card, player) {
   let nextCard = card;
   let currentPlayer = player;
-  let handTotal = currentPlayer.hand.reduce((a, b) => a + b);
+  let handTotal =
+    currentPlayer.hand[0].cardValue + currentPlayer.hand[1].cardValue;
 
   currentPlayer.hand.push(nextCard);
   handTotal += nextCard.cardValue;
@@ -82,7 +83,7 @@ function hit(card, player) {
     console.log("Bust!");
     // Some kind of reset function to get ready for next hand
   } else {
-    console.log("What is your next move?");
+    console.log(handTotal);
   }
 }
 
@@ -108,6 +109,10 @@ function gameStart() {
       dealer.hand.push(newDeck.deal());
     }
   }
+  hit(newDeck.deal(), player);
+  console.log(player.hand);
 }
+
+gameStart();
 
 module.exports = Deck;
