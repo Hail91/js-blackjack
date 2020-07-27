@@ -4,7 +4,6 @@
 class Deck {
   constructor() {
     this.deck = [];
-
     // Suits Array
     const suits = ["spades", "clubs", "diamonds", "hearts"];
     // Values Array
