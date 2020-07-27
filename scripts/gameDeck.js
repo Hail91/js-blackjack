@@ -51,6 +51,10 @@ class Deck {
     // Return reference to deck
     return this;
   }
+  // Deal method
+  deal() {
+    return this.deck.pop();
+  }
 }
 
 const newDeck = new Deck();
