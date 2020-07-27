@@ -57,6 +57,4 @@ class Deck {
   }
 }
 
-const newDeck = new Deck();
-newDeck.shuffle();
-console.log(newDeck.deck);
+module.exports = Deck;
