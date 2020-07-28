@@ -116,19 +116,19 @@ function gameStart() {
   while (player.hand.length < 2 && dealer.hand.length < 2) {
     if (player.hand.length < 2) {
       player.hand.push(newDeck.deal());
-      document.getElementById("player-cards").innerHTML = player.hand.map(
-        (card) => {
+      document.getElementById("player-cards").innerHTML = player.hand
+        .map((card) => {
           return "<div>" + card.cardType + "</div>";
-        }
-      );
+        })
+        .join("");
     }
     if (dealer.hand.length < 2) {
       dealer.hand.push(newDeck.deal());
-      document.getElementById("dealer-cards").innerHTML = dealer.hand.map(
-        (card) => {
+      document.getElementById("dealer-cards").innerHTML = dealer.hand
+        .map((card) => {
           return "<div>" + card.cardType + "</div>";
-        }
-      );
+        })
+        .join("");
     }
   }
 }
