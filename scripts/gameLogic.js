@@ -79,35 +79,35 @@ class Deck {
   }
 }
 
-// Function to allow user to hit, taking another card.
-function hit(card, player) {
-  let nextCard = card;
-  let currentPlayer = player;
-  let handTotal =
-    currentPlayer.hand[0].cardValue + currentPlayer.hand[1].cardValue;
+// Create Deck
+const newDeck = new Deck();
+// Shuffle Deck
+newDeck.shuffle();
 
-  currentPlayer.hand.push(nextCard);
+// Initialize Player and Dealer
+const dealer = new Dealer();
+const player = new Player("Player");
+
+// Function to allow user to hit, taking another card.
+function hit() {
+  let handTotal = player.hand[0].cardValue + player.hand[1].cardValue;
+  let nextCard = newDeck.deal();
+  player.hand.push(nextCard);
   handTotal += nextCard.cardValue;
 
   // Conditional logic to take a card (this function will be called if user presses the 'hit' button on the UI)
   if (handTotal > 21) {
-    console.log("Bust!");
+    document.getElementById("player-message").innerHTML = "Bust!";
+    console.log(player.hand);
     // Some kind of reset function to get ready for next hand
   } else {
-    console.log(handTotal);
+    document.getElementById("player-message").innerHTML = "Make your next move";
+    console.log(player.hand);
   }
 }
 
 // Function to initialize game
 function gameStart() {
-  // Create Deck
-  const newDeck = new Deck();
-  // Shuffle Deck
-  newDeck.shuffle();
-  // Initialize Player and Dealer
-  const dealer = new Dealer();
-  const player = new Player("Player");
-
   // Set Dealer and Player names on screen
   document.getElementById("dealer-name").innerHTML = dealer.name;
   document.getElementById("player-name").innerHTML = player.name;
