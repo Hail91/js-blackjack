@@ -1,7 +1,18 @@
 "use strict";
 // Need to bring in Player and Dealer.
-const Dealer = require("./dealer");
-const Player = require("./player");
+class Dealer {
+  constructor() {
+    this.name = "Dealer";
+    this.hand = [];
+  }
+}
+
+class Player {
+  constructor(name) {
+    this.name = name;
+    this.hand = [];
+  }
+}
 // Should initialize the deck as an array and populate with cards. (Gonna roll with Object Oriented Paradigm for this)
 class Deck {
   constructor() {
@@ -95,24 +106,39 @@ function gameStart() {
   newDeck.shuffle();
   // Initialize Player and Dealer
   const dealer = new Dealer();
-  const player = new Player("Aaron");
+  const player = new Player("Player");
 
-  // Set current player to a variable
-  let currentPlayer = player;
+  // Set Dealer and Player names on screen
+  document.getElementById("dealer-name").innerHTML = dealer.name;
+  document.getElementById("player-name").innerHTML = player.name;
 
   // Deal cards to dealer and player (Player gets 1, then dealer, then player until both have 2 cards)
   while (player.hand.length < 2 && dealer.hand.length < 2) {
     if (player.hand.length < 2) {
       player.hand.push(newDeck.deal());
+      document.getElementById("player-cards").innerHTML = player.hand
+        .map((card) => {
+          return "<div>" + card.cardType + "</div>";
+        })
+        .join("");
     }
     if (dealer.hand.length < 2) {
       dealer.hand.push(newDeck.deal());
+      document.getElementById("dealer-cards").innerHTML = dealer.hand
+        .map((card) => {
+          return "<div>" + card.cardType + "</div>";
+        })
+        .join("");
     }
   }
-  hit(newDeck.deal(), player);
-  console.log(player.hand);
+  // Get starting hand count for dealer & player.
+  let dealerCount = dealer.hand.reduce((a, b) => a.cardValue + b.cardValue);
+  let playerCount = player.hand.reduce((a, b) => a.cardValue + b.cardValue);
+
+  document.getElementById(
+    "dealer-count"
+  ).innerHTML = `Dealer count is ${dealerCount}`;
+  document.getElementById(
+    "player-count"
+  ).innerHTML = `Your card count is currently ${playerCount}`;
 }
-
-gameStart();
-
-module.exports = Deck;
