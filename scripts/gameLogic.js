@@ -131,4 +131,14 @@ function gameStart() {
         .join("");
     }
   }
+  // Get starting hand count for dealer & player.
+  let dealerCount = dealer.hand.reduce((a, b) => a.cardValue + b.cardValue);
+  let playerCount = player.hand.reduce((a, b) => a.cardValue + b.cardValue);
+
+  document.getElementById(
+    "dealer-count"
+  ).innerHTML = `Dealer count is ${dealerCount}`;
+  document.getElementById(
+    "player-count"
+  ).innerHTML = `Your card count is currently ${playerCount}`;
 }
