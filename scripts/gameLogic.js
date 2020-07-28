@@ -90,21 +90,39 @@ const player = new Player("Player");
 
 // Function to allow user to hit, taking another card.
 function hit() {
-  let handTotal = player.hand[0].cardValue + player.hand[1].cardValue;
+  let handTotal = player.hand
+    .map((card) => {
+      return card.cardValue;
+    })
+    .reduce((a, b) => a + b);
   let nextCard = newDeck.deal();
   player.hand.push(nextCard);
-  handTotal += nextCard.cardValue;
 
+  handTotal += nextCard.cardValue;
+  // Re-render new hand
+  document.getElementById("player-cards").innerHTML = player.hand
+    .map((card) => {
+      return "<div>" + card.cardType + "</div>";
+    })
+    .join("");
+  // handTotal += nextCard.cardValue;
   // Conditional logic to take a card (this function will be called if user presses the 'hit' button on the UI)
   if (handTotal > 21) {
     document.getElementById("player-message").innerHTML = "Bust!";
-    console.log(player.hand);
+    document.getElementById(
+      "player-count"
+    ).innerHTML = `Your card count is now ${handTotal}`;
     // Some kind of reset function to get ready for next hand
   } else {
     document.getElementById("player-message").innerHTML = "Make your next move";
-    console.log(player.hand);
+    document.getElementById(
+      "player-count"
+    ).innerHTML = `Your card count is now ${handTotal}`;
   }
 }
+
+// Reset function if hand has a conclusion
+function reset() {}
 
 // Function to initialize game
 function gameStart() {
@@ -141,4 +159,10 @@ function gameStart() {
   document.getElementById(
     "player-count"
   ).innerHTML = `Your card count is currently ${playerCount}`;
+
+  // Check if User has blackjack
+  if (playerCount === 21) {
+    document.getElementById("player-message").innerHTML =
+      "Blackjack! Player wins!";
+  }
 }
