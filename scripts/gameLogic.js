@@ -88,6 +88,13 @@ newDeck.shuffle();
 const dealer = new Dealer();
 const player = new Player("Player");
 
+// Function to stay
+function stay() {
+  // Stay function will be added to stay button on UI
+  // If player decides to stay, disable the hit/stay buttons
+  // Then dealer should start drawing cards,
+}
+
 // Function to allow user to hit, taking another card.
 function hit() {
   let handTotal = player.hand
@@ -128,6 +135,10 @@ function hit() {
 
 // Reset function if hand has a conclusion
 function reset() {
+  // Remove next hand buttom from DOM
+  // Need to grab last child of play-container div
+  let playerContainer = document.getElementsByClassName("player-container")[0];
+  playerContainer.removeChild(playerContainer.lastChild);
   // Reset player/dealer hands
   player.hand = [];
   dealer.hand = [];
@@ -203,7 +214,11 @@ function gameStart() {
   document.getElementById(
     "player-count"
   ).innerHTML = `Your card count is currently ${playerCount}`;
-
+  // Check if Dealer has blackjack
+  if (dealerCount === 21) {
+    document.getElementById("dealer-message").innerHTML =
+      "Blackjack! Dealer wins!";
+  }
   // Check if User has blackjack
   if (playerCount === 21) {
     document.getElementById("player-message").innerHTML =
