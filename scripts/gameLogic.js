@@ -105,13 +105,17 @@ function hit() {
       return "<div>" + card.cardType + "</div>";
     })
     .join("");
-  // handTotal += nextCard.cardValue;
   // Conditional logic to take a card (this function will be called if user presses the 'hit' button on the UI)
   if (handTotal > 21) {
     document.getElementById("player-message").innerHTML = "Bust!";
     document.getElementById(
       "player-count"
     ).innerHTML = `Your card count is now ${handTotal}`;
+    // Add button to UI to deal next hand
+    let nextHandBtn = document.createElement("button");
+    nextHandBtn.innerHTML = "Next Hand";
+    let playerCont = document.getElementsByClassName("player-container")[0];
+    playerCont.appendChild(nextHandBtn);
     // Some kind of reset function to get ready for next hand
   } else {
     document.getElementById("player-message").innerHTML = "Make your next move";
