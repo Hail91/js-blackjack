@@ -107,13 +107,14 @@ function hit() {
     .join("");
   // Conditional logic to take a card (this function will be called if user presses the 'hit' button on the UI)
   if (handTotal > 21) {
-    document.getElementById("player-message").innerHTML = "Bust!";
+    document.getElementById("player-message").innerHTML = "Bust! Dealer wins!";
     document.getElementById(
       "player-count"
     ).innerHTML = `Your card count is now ${handTotal}`;
     // Add button to UI to deal next hand
     let nextHandBtn = document.createElement("button");
     nextHandBtn.innerHTML = "Next Hand";
+    nextHandBtn.addEventListener("click", reset);
     let playerCont = document.getElementsByClassName("player-container")[0];
     playerCont.appendChild(nextHandBtn);
     // Some kind of reset function to get ready for next hand
@@ -126,7 +127,46 @@ function hit() {
 }
 
 // Reset function if hand has a conclusion
-function reset() {}
+function reset() {
+  // Reset player/dealer hands
+  player.hand = [];
+  dealer.hand = [];
+  // Draw two new cards for both
+  while (player.hand.length < 2 && dealer.hand.length < 2) {
+    if (player.hand.length < 2) {
+      player.hand.push(newDeck.deal());
+      document.getElementById("player-cards").innerHTML = player.hand
+        .map((card) => {
+          return "<div>" + card.cardType + "</div>";
+        })
+        .join("");
+    }
+    if (dealer.hand.length < 2) {
+      dealer.hand.push(newDeck.deal());
+      document.getElementById("dealer-cards").innerHTML = dealer.hand
+        .map((card) => {
+          return "<div>" + card.cardType + "</div>";
+        })
+        .join("");
+    }
+  }
+  // Get hand count for both and render
+  let dealerCount = dealer.hand.reduce((a, b) => a.cardValue + b.cardValue);
+  let playerCount = player.hand.reduce((a, b) => a.cardValue + b.cardValue);
+
+  document.getElementById(
+    "dealer-count"
+  ).innerHTML = `Dealer count is ${dealerCount}`;
+  document.getElementById(
+    "player-count"
+  ).innerHTML = `Your card count is currently ${playerCount}`;
+  document.getElementById("player-message").innerHTML = "";
+  // Check if User has blackjack
+  if (playerCount === 21) {
+    document.getElementById("player-message").innerHTML =
+      "Blackjack! Player wins!";
+  }
+}
 
 // Function to initialize game
 function gameStart() {
