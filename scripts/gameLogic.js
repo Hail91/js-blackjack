@@ -224,5 +224,10 @@ function gameStart() {
   if (playerCount === 21) {
     document.getElementById("player-message").innerHTML =
       "Blackjack! Player wins!";
+    let newHand = document.createElement("button");
+    newHand.innerHTML = "Next Hand";
+    newHand.addEventListener("click", reset);
+    let playerCont = document.getElementsByClassName("player-container")[0];
+    playerCont.appendChild(newHand);
   }
 }
