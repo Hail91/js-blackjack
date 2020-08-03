@@ -83,21 +83,81 @@ class Deck {
 const newDeck = new Deck();
 // Shuffle Deck
 newDeck.shuffle();
-
 // Initialize Player and Dealer
 const dealer = new Dealer();
 const player = new Player("Player");
 
 // Function to stay
 function stay() {
-  // Stay function will be added to stay button on UI
   // If player decides to stay, disable the hit/stay buttons
-  // Then dealer should start drawing cards,
+  document.getElementById("hit-btn").setAttribute("disabled", true);
+  document.getElementById("stay-btn").setAttribute("disabled", true);
+  // Then dealer should start drawing cards
+  let dealerCount = dealer.hand.reduce((a, b) => a.cardValue + b.cardValue);
+  let playerCount = player.hand
+    .map((card) => {
+      return card.cardValue;
+    })
+    .reduce((a, b) => a + b);
+  console.log(playerCount);
   // Deal will draw cards until dealer either has 17/18/19/20/21, or busts. (hand > 21)
+  while (dealerCount < 17) {
+    dealerHit();
+    dealerCount = dealer.hand
+      .map((card) => {
+        return card.cardValue;
+      })
+      .reduce((a, b) => a + b);
+    console.log(dealerCount);
+  }
+  if (dealerCount > playerCount && dealerCount <= 21) {
+    alert("Dealer Wins!");
+  } else if (playerCount > dealerCount) {
+    alert("Player Wins!");
+  } else {
+    alert("Push!");
+  }
+}
+
+// Function to allow Dealer to take a card.
+function dealerHit() {
+  let handTotal = dealer.hand
+    .map((card) => {
+      return card.cardValue;
+    })
+    .reduce((a, b) => a + b);
+  let nextCard = newDeck.deal();
+  dealer.hand.push(nextCard);
+
+  handTotal += nextCard.cardValue;
+  // Re-render new hand
+  document.getElementById("dealer-cards").innerHTML = dealer.hand
+    .map((card) => {
+      return "<div>" + card.cardType + "</div>";
+    })
+    .join("");
+  // Conditional logic to take a card (this function will be called if user presses the 'hit' button on the UI)
+  if (handTotal > 21) {
+    document.getElementById("dealer-message").innerHTML = "Bust! Player wins!";
+    document.getElementById(
+      "dealer-count"
+    ).innerHTML = `Dealer card count is now ${handTotal}`;
+    // Add button to UI to deal next hand
+    let nextHandBtn = document.createElement("button");
+    nextHandBtn.innerHTML = "Next Hand";
+    nextHandBtn.addEventListener("click", reset);
+    let dealerCont = document.getElementsByClassName("dealer-container")[0];
+    dealerCont.appendChild(nextHandBtn);
+    // Some kind of reset function to get ready for next hand
+  } else {
+    document.getElementById(
+      "dealer-count"
+    ).innerHTML = `Dealer card count is now ${handTotal}`;
+  }
 }
 
 // Function to allow user to hit, taking another card.
-function hit() {
+function playerHit() {
   let handTotal = player.hand
     .map((card) => {
       return card.cardValue;
@@ -224,5 +284,10 @@ function gameStart() {
   if (playerCount === 21) {
     document.getElementById("player-message").innerHTML =
       "Blackjack! Player wins!";
+    let newHand = document.createElement("button");
+    newHand.innerHTML = "Next Hand";
+    newHand.addEventListener("click", reset);
+    let playerCont = document.getElementsByClassName("player-container")[0];
+    playerCont.appendChild(newHand);
   }
 }
