@@ -92,6 +92,8 @@ const player = new Player("Player");
 function stay() {
   // Stay function will be added to stay button on UI
   // If player decides to stay, disable the hit/stay buttons
+  document.getElementById("hit-btn").setAttribute("disabled", true);
+  document.getElementById("stay-btn").setAttribute("disabled", true);
   // Then dealer should start drawing cards,
   // Deal will draw cards until dealer either has 17/18/19/20/21, or busts. (hand > 21)
 }
