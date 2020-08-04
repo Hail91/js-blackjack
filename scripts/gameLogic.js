@@ -14,7 +14,6 @@ class Dealer {
       .reduce((a, b) => a + b);
   }
 }
-
 class Player {
   constructor(name) {
     this.name = name;
@@ -27,7 +26,6 @@ class Player {
       })
       .reduce((a, b) => a + b);
   }
-  // Get total value of current hand
 }
 // Should initialize the deck as an array and populate with cards. (Gonna roll with Object Oriented Paradigm for this)
 class Deck {
