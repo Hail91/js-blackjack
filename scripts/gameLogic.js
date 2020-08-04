@@ -5,6 +5,14 @@ class Dealer {
     this.name = "Dealer";
     this.hand = [];
   }
+  // Get total value of current hand
+  handSum() {
+    return this.hand
+      .map((card) => {
+        return card.cardValue;
+      })
+      .reduce((a, b) => a + b);
+  }
 }
 
 class Player {
@@ -12,6 +20,14 @@ class Player {
     this.name = name;
     this.hand = [];
   }
+  handSum() {
+    return this.hand
+      .map((card) => {
+        return card.cardValue;
+      })
+      .reduce((a, b) => a + b);
+  }
+  // Get total value of current hand
 }
 // Should initialize the deck as an array and populate with cards. (Gonna roll with Object Oriented Paradigm for this)
 class Deck {
@@ -86,7 +102,7 @@ newDeck.shuffle();
 // Initialize Player and Dealer
 const dealer = new Dealer();
 const player = new Player("Player");
-
+// Create Button to reset and deal new hand
 let nextHandBtn = document.createElement("button");
 nextHandBtn.setAttribute("id", "next-hand");
 nextHandBtn.innerHTML = "Next Hand";
@@ -100,24 +116,12 @@ function stay() {
   document.getElementById("hit-btn").setAttribute("disabled", true);
   document.getElementById("stay-btn").setAttribute("disabled", true);
   // Then dealer should start drawing cards
-  let dealerCount = dealer.hand
-    .map((card) => {
-      return card.cardValue;
-    })
-    .reduce((a, b) => a + b);
-  let playerCount = player.hand
-    .map((card) => {
-      return card.cardValue;
-    })
-    .reduce((a, b) => a + b);
+  let dealerCount = dealer.handSum();
+  let playerCount = player.handSum();
   // Deal will draw cards until dealer either has 17/18/19/20/21, or busts. (hand > 21)
   while (dealerCount < 17) {
     dealerHit();
-    dealerCount = dealer.hand
-      .map((card) => {
-        return card.cardValue;
-      })
-      .reduce((a, b) => a + b);
+    dealerCount = dealer.handSum();
   }
   if (dealerCount > playerCount && dealerCount <= 21) {
     alert("Dealer Wins!");
@@ -134,11 +138,7 @@ function stay() {
 
 // Function to allow Dealer to take a card.
 function dealerHit() {
-  let handTotal = dealer.hand
-    .map((card) => {
-      return card.cardValue;
-    })
-    .reduce((a, b) => a + b);
+  let handTotal = dealer.handSum();
   let nextCard = newDeck.deal();
   dealer.hand.push(nextCard);
 
@@ -164,11 +164,7 @@ function dealerHit() {
 
 // Function to allow user to hit, taking another card.
 function playerHit() {
-  let handTotal = player.hand
-    .map((card) => {
-      return card.cardValue;
-    })
-    .reduce((a, b) => a + b);
+  let handTotal = player.handSum();
   let nextCard = newDeck.deal();
   player.hand.push(nextCard);
 
@@ -197,6 +193,7 @@ function playerHit() {
 function reset() {
   document.getElementById("hit-btn").removeAttribute("disabled");
   document.getElementById("stay-btn").removeAttribute("disabled");
+  document.getElementById("dealer-message").innerHTML = "";
 
   // Reset player/dealer hands
   player.hand.length = 0;
@@ -221,16 +218,8 @@ function reset() {
     }
   }
   // Get hand count for both and render
-  let dealerCount = dealer.hand
-    .map((card) => {
-      return card.cardValue;
-    })
-    .reduce((a, b) => a + b);
-  let playerCount = player.hand
-    .map((card) => {
-      return card.cardValue;
-    })
-    .reduce((a, b) => a + b);
+  let dealerCount = dealer.handSum();
+  let playerCount = player.handSum();
 
   document.getElementById(
     "dealer-count"
@@ -276,8 +265,8 @@ function gameStart() {
     }
   }
   // Get starting hand count for dealer & player.
-  let dealerCount = dealer.hand.reduce((a, b) => a.cardValue + b.cardValue);
-  let playerCount = player.hand.reduce((a, b) => a.cardValue + b.cardValue);
+  let dealerCount = dealer.handSum();
+  let playerCount = dealer.handSum();
 
   document.getElementById(
     "dealer-count"
