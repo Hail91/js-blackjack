@@ -141,7 +141,7 @@ function dealerHit() {
   let handTotal = dealer.handSum();
   let nextCard = newDeck.deal();
   dealer.hand.push(nextCard);
-
+  console.log(newDeck.deck.length);
   handTotal += nextCard.cardValue;
   // Re-render new hand
   document.getElementById("dealer-cards").innerHTML = dealer.hand
@@ -167,7 +167,7 @@ function playerHit() {
   let handTotal = player.handSum();
   let nextCard = newDeck.deal();
   player.hand.push(nextCard);
-
+  console.log(newDeck.deck.length);
   handTotal += nextCard.cardValue;
   // Re-render new hand
   document.getElementById("player-cards").innerHTML = player.hand
@@ -266,7 +266,7 @@ function gameStart() {
   }
   // Get starting hand count for dealer & player.
   let dealerCount = dealer.handSum();
-  let playerCount = dealer.handSum();
+  let playerCount = player.handSum();
 
   document.getElementById(
     "dealer-count"
