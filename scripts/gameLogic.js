@@ -87,13 +87,24 @@ newDeck.shuffle();
 const dealer = new Dealer();
 const player = new Player("Player");
 
+let nextHandBtn = document.createElement("button");
+nextHandBtn.setAttribute("id", "next-hand");
+nextHandBtn.innerHTML = "Next Hand";
+nextHandBtn.addEventListener("click", reset);
+let playerCont = document.getElementsByClassName("player-container")[0];
+playerCont.appendChild(nextHandBtn);
+
 // Function to stay
 function stay() {
   // If player decides to stay, disable the hit/stay buttons
   document.getElementById("hit-btn").setAttribute("disabled", true);
   document.getElementById("stay-btn").setAttribute("disabled", true);
   // Then dealer should start drawing cards
-  let dealerCount = dealer.hand.reduce((a, b) => a.cardValue + b.cardValue);
+  let dealerCount = dealer.hand
+    .map((card) => {
+      return card.cardValue;
+    })
+    .reduce((a, b) => a + b);
   let playerCount = player.hand
     .map((card) => {
       return card.cardValue;
@@ -119,11 +130,6 @@ function stay() {
   ) {
     alert("Push!");
   }
-  let nextHandBtn = document.createElement("button");
-  nextHandBtn.innerHTML = "Next Hand";
-  nextHandBtn.addEventListener("click", reset);
-  let dealerCont = document.getElementsByClassName("dealer-container")[0];
-  dealerCont.appendChild(nextHandBtn);
 }
 
 // Function to allow Dealer to take a card.
@@ -149,13 +155,6 @@ function dealerHit() {
     document.getElementById(
       "dealer-count"
     ).innerHTML = `Dealer card count is now ${handTotal}`;
-    // Add button to UI to deal next hand
-    let nextHandBtn = document.createElement("button");
-    nextHandBtn.innerHTML = "Next Hand";
-    nextHandBtn.addEventListener("click", reset);
-    let dealerCont = document.getElementsByClassName("dealer-container")[0];
-    dealerCont.appendChild(nextHandBtn);
-    // Some kind of reset function to get ready for next hand
   } else {
     document.getElementById(
       "dealer-count"
@@ -186,13 +185,6 @@ function playerHit() {
     document.getElementById(
       "player-count"
     ).innerHTML = `Your card count is now ${handTotal}`;
-    // Add button to UI to deal next hand
-    let nextHandBtn = document.createElement("button");
-    nextHandBtn.innerHTML = "Next Hand";
-    nextHandBtn.addEventListener("click", reset);
-    let playerCont = document.getElementsByClassName("player-container")[0];
-    playerCont.appendChild(nextHandBtn);
-    // Some kind of reset function to get ready for next hand
   } else {
     document.getElementById("player-message").innerHTML = "Make your next move";
     document.getElementById(
@@ -203,16 +195,9 @@ function playerHit() {
 
 // Reset function if hand has a conclusion
 function reset() {
-  // Not sure this is working **
   document.getElementById("hit-btn").removeAttribute("disabled");
   document.getElementById("stay-btn").removeAttribute("disabled");
-  // Remove next hand buttom from DOM
-  // Need to grab last child of play-container div
-  let playerContainer = document.getElementsByClassName("player-container")[0];
-  playerContainer.removeChild(playerContainer.lastChild);
-  // Also Remove from Dealer
-  let dealerContainer = document.getElementsByClassName("dealer-container")[0];
-  dealerContainer.removeChild(dealerContainer.lastChild);
+
   // Reset player/dealer hands
   player.hand.length = 0;
   dealer.hand.length = 0;
@@ -236,10 +221,16 @@ function reset() {
     }
   }
   // Get hand count for both and render
-  let dealerCount = dealer.hand.reduce((a, b) => a.cardValue + b.cardValue);
-  let playerCount = player.hand.reduce((a, b) => a.cardValue + b.cardValue);
-
-  document.getElementById("dealer-message").innerHTML = "";
+  let dealerCount = dealer.hand
+    .map((card) => {
+      return card.cardValue;
+    })
+    .reduce((a, b) => a + b);
+  let playerCount = player.hand
+    .map((card) => {
+      return card.cardValue;
+    })
+    .reduce((a, b) => a + b);
 
   document.getElementById(
     "dealer-count"
@@ -300,11 +291,6 @@ function gameStart() {
       "Blackjack! Dealer wins!";
     document.getElementById("hit-btn").setAttribute("disabled", true);
     document.getElementById("stay-btn").setAttribute("disabled", true);
-    let newHand = document.createElement("button");
-    newHand.innerHTML = "Next Hand";
-    newHand.addEventListener("click", reset);
-    let playerCont = document.getElementsByClassName("player-container")[0];
-    playerCont.appendChild(newHand);
   }
   // Check if User has blackjack
   if (playerCount === 21 && dealerCount !== 21) {
@@ -312,10 +298,5 @@ function gameStart() {
       "Blackjack! Player wins!";
     document.getElementById("hit-btn").setAttribute("disabled", true);
     document.getElementById("stay-btn").setAttribute("disabled", true);
-    let newHand = document.createElement("button");
-    newHand.innerHTML = "Next Hand";
-    newHand.addEventListener("click", reset);
-    let playerCont = document.getElementsByClassName("player-container")[0];
-    playerCont.appendChild(newHand);
   }
 }
