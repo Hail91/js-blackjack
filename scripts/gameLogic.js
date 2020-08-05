@@ -61,6 +61,12 @@ class Deck {
           } else if (values[v] === "A") {
             cardNumValue = 11;
           }
+          let card = {
+            cardSuit: suit,
+            cardType: values[v],
+            cardValue: cardNumValue,
+            cardColor: color,
+          };
           this.deck.push({
             cardSuit: suit,
             cardType: values[v],
@@ -270,6 +276,9 @@ function gameStart() {
         .join("");
     }
   }
+  let playerCards = document.getElementById("player-cards").children;
+  let cards = [...playerCards];
+  cards.map((element) => (element.style.color = "red"));
   // Get starting hand count for dealer & player.
   let dealerCount = dealer.handSum();
   let playerCount = player.handSum();
