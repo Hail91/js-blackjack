@@ -1,0 +1,26 @@
+/* Main Dealer Card Container */
+#dealer-cards {
+  width: 10%;
+  display: flex;
+  justify-content: space-evenly;
+}
+
+/* Individual Dealer Cards */
+#dealer-cards div {
+  height: 4rem;
+  width: 3rem;
+  border: 1px solid black;
+}
+
+/* Main Player Card Container */
+#player-cards {
+  width: 10%;
+  display: flex;
+  justify-content: space-evenly;
+}
+
+#player-cards div {
+  width: 3rem;
+  height: 4rem;
+  border: 1px solid black;
+}

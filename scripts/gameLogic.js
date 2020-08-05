@@ -14,7 +14,6 @@ class Dealer {
       .reduce((a, b) => a + b);
   }
 }
-
 class Player {
   constructor(name) {
     this.name = name;
@@ -27,7 +26,6 @@ class Player {
       })
       .reduce((a, b) => a + b);
   }
-  // Get total value of current hand
 }
 // Should initialize the deck as an array and populate with cards. (Gonna roll with Object Oriented Paradigm for this)
 class Deck {
@@ -52,6 +50,7 @@ class Deck {
       "K",
     ];
     let numDecks = 0;
+    let color = "red";
     // Now need to loop over all cards for each suit and push to the deck initialized on line 6.
     while (numDecks < 6) {
       suits.forEach((suit) => {
@@ -62,14 +61,26 @@ class Deck {
           } else if (values[v] === "A") {
             cardNumValue = 11;
           }
+          let card = {
+            cardSuit: suit,
+            cardType: values[v],
+            cardValue: cardNumValue,
+            cardColor: color,
+          };
           this.deck.push({
             cardSuit: suit,
             cardType: values[v],
             cardValue: cardNumValue,
+            cardColor: color,
           });
         }
       });
       numDecks += 1;
+      if (numDecks > 2) {
+        color = "black";
+      } else {
+        continue;
+      }
     }
   }
   // Add methods to Deck class here
@@ -99,6 +110,7 @@ class Deck {
 const newDeck = new Deck();
 // Shuffle Deck
 newDeck.shuffle();
+console.log(newDeck.deck);
 // Initialize Player and Dealer
 const dealer = new Dealer();
 const player = new Player("Player");
