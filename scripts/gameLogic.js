@@ -276,9 +276,6 @@ function gameStart() {
         .join("");
     }
   }
-  let playerCards = document.getElementById("player-cards").children;
-  let cards = [...playerCards];
-  cards.map((element) => (element.style.color = "red"));
   // Get starting hand count for dealer & player.
   let dealerCount = dealer.handSum();
   let playerCount = player.handSum();
