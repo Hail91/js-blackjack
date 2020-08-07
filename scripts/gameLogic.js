@@ -178,7 +178,8 @@ function playerHit() {
   // Re-render new hand
   document.getElementById("player-cards").innerHTML = player.hand
     .map((card) => {
-      return "<div>" + card.cardType + "</div>";
+      let color = card.cardColor;
+      return `<div style='color: ${color}'>` + card.cardType + `</div>`;
     })
     .join("");
   // Conditional logic to take a card (this function will be called if user presses the 'hit' button on the UI)
@@ -210,7 +211,8 @@ function reset() {
       player.hand.push(newDeck.deal());
       document.getElementById("player-cards").innerHTML = player.hand
         .map((card) => {
-          return "<div>" + card.cardType + "</div>";
+          let color = card.cardColor;
+          return `<div style='color: ${color}'>` + card.cardType + `</div>`;
         })
         .join("");
     }
@@ -218,7 +220,8 @@ function reset() {
       dealer.hand.push(newDeck.deal());
       document.getElementById("dealer-cards").innerHTML = dealer.hand
         .map((card) => {
-          return "<div>" + card.cardType + "</div>";
+          let color = card.cardColor;
+          return `<div style='color: ${color}'>` + card.cardType + `</div>`;
         })
         .join("");
     }
