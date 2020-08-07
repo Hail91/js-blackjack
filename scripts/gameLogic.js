@@ -61,12 +61,6 @@ class Deck {
           } else if (values[v] === "A") {
             cardNumValue = 11;
           }
-          let card = {
-            cardSuit: suit,
-            cardType: values[v],
-            cardValue: cardNumValue,
-            cardColor: color,
-          };
           this.deck.push({
             cardSuit: suit,
             cardType: values[v],
@@ -158,7 +152,8 @@ function dealerHit() {
   // Re-render new hand
   document.getElementById("dealer-cards").innerHTML = dealer.hand
     .map((card) => {
-      return "<div>" + card.cardType + "</div>";
+      let cardClass = `${card.cardType.toLowerCase()}${card.cardSuit[0]}`;
+      return `<div class='pcard-${cardClass}'>` + "" + `</div>`;
     })
     .join("");
   // Conditional logic to take a card (this function will be called if user presses the 'hit' button on the UI)
@@ -184,7 +179,8 @@ function playerHit() {
   // Re-render new hand
   document.getElementById("player-cards").innerHTML = player.hand
     .map((card) => {
-      return "<div>" + card.cardType + "</div>";
+      let cardClass = `${card.cardType.toLowerCase()}${card.cardSuit[0]}`;
+      return `<div class='pcard-${cardClass}'>` + "" + `</div>`;
     })
     .join("");
   // Conditional logic to take a card (this function will be called if user presses the 'hit' button on the UI)
@@ -216,7 +212,8 @@ function reset() {
       player.hand.push(newDeck.deal());
       document.getElementById("player-cards").innerHTML = player.hand
         .map((card) => {
-          return "<div>" + card.cardType + "</div>";
+          let cardClass = `${card.cardType.toLowerCase()}${card.cardSuit[0]}`;
+          return `<div class='pcard-${cardClass}'>` + "" + `</div>`;
         })
         .join("");
     }
@@ -224,7 +221,8 @@ function reset() {
       dealer.hand.push(newDeck.deal());
       document.getElementById("dealer-cards").innerHTML = dealer.hand
         .map((card) => {
-          return "<div>" + card.cardType + "</div>";
+          let cardClass = `${card.cardType.toLowerCase()}${card.cardSuit[0]}`;
+          return `<div class='pcard-${cardClass}'>` + "" + `</div>`;
         })
         .join("");
     }
@@ -263,7 +261,8 @@ function gameStart() {
       player.hand.push(newDeck.deal());
       document.getElementById("player-cards").innerHTML = player.hand
         .map((card) => {
-          return "<div>" + card.cardType + "</div>";
+          let cardClass = `${card.cardType.toLowerCase()}${card.cardSuit[0]}`;
+          return `<div class='pcard-${cardClass}'>` + "" + `</div>`;
         })
         .join("");
     }
@@ -271,7 +270,8 @@ function gameStart() {
       dealer.hand.push(newDeck.deal());
       document.getElementById("dealer-cards").innerHTML = dealer.hand
         .map((card) => {
-          return "<div>" + card.cardType + "</div>";
+          let cardClass = `${card.cardType.toLowerCase()}${card.cardSuit[0]}`;
+          return `<div class='pcard-${cardClass}'>` + "" + `</div>`;
         })
         .join("");
     }
