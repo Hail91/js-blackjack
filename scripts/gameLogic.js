@@ -61,12 +61,6 @@ class Deck {
           } else if (values[v] === "A") {
             cardNumValue = 11;
           }
-          let card = {
-            cardSuit: suit,
-            cardType: values[v],
-            cardValue: cardNumValue,
-            cardColor: color,
-          };
           this.deck.push({
             cardSuit: suit,
             cardType: values[v],
@@ -262,8 +256,9 @@ function gameStart() {
     if (player.hand.length < 2) {
       player.hand.push(newDeck.deal());
       document.getElementById("player-cards").innerHTML = player.hand
-        .map((card) => {
-          return "<div>" + card.cardType + "</div>";
+        .map((card, i) => {
+          let color = card.cardColor;
+          return `<div style='color: ${color}'>` + card.cardType + `</div>`;
         })
         .join("");
     }
@@ -271,7 +266,8 @@ function gameStart() {
       dealer.hand.push(newDeck.deal());
       document.getElementById("dealer-cards").innerHTML = dealer.hand
         .map((card) => {
-          return "<div>" + card.cardType + "</div>";
+          let color = card.cardColor;
+          return `<div style='color: ${color}'>` + card.cardType + `</div>`;
         })
         .join("");
     }
