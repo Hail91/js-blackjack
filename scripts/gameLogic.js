@@ -118,6 +118,12 @@ playerCont.appendChild(nextHandBtn);
 
 // Function to stay
 function stay() {
+  document.getElementById("dealer-cards").innerHTML = dealer.hand
+    .map((card) => {
+      let cardClass = `${card.cardType.toLowerCase()}${card.cardSuit[0]}`;
+      return `<div class='pcard-${cardClass}'>` + "" + `</div>`;
+    })
+    .join("");
   // If player decides to stay, disable the hit/stay buttons
   document.getElementById("hit-btn").setAttribute("disabled", true);
   document.getElementById("stay-btn").setAttribute("disabled", true);
@@ -225,6 +231,8 @@ function playerHit() {
 
 // Reset function if hand has a conclusion
 function reset() {
+  let cardClass;
+  let secondClass;
   document.getElementById("hit-btn").removeAttribute("disabled");
   document.getElementById("stay-btn").removeAttribute("disabled");
   document.getElementById("dealer-message").innerHTML = "";
@@ -246,9 +254,14 @@ function reset() {
     if (dealer.hand.length < 2) {
       dealer.hand.push(newDeck.deal());
       document.getElementById("dealer-cards").innerHTML = dealer.hand
-        .map((card) => {
-          let cardClass = `${card.cardType.toLowerCase()}${card.cardSuit[0]}`;
-          return `<div class='pcard-${cardClass}'>` + "" + `</div>`;
+        .map((card, index) => {
+          if (index === 0) {
+            cardClass = `${card.cardType.toLowerCase()}${card.cardSuit[0]}`;
+            return `<div class='pcard-back'>` + "" + `</div>`;
+          } else {
+            secondClass = `${card.cardType.toLowerCase()}${card.cardSuit[0]}`;
+            return `<div class='pcard-${secondClass}'>` + "" + `</div>`;
+          }
         })
         .join("");
     }
@@ -257,19 +270,21 @@ function reset() {
   let dealerCount = dealer.handSum();
   let playerCount = player.handSum();
 
-  document.getElementById(
-    "dealer-count"
-  ).innerHTML = `Dealer count is ${dealerCount}`;
+  document.getElementById("dealer-count").innerHTML = "";
+
   document.getElementById(
     "player-count"
   ).innerHTML = `Your card count is currently ${playerCount}`;
   document.getElementById("player-message").innerHTML = "";
   // Check if User has blackjack
-  if (playerCount === 21) {
+  if (playerCount === 21 && dealerCount !== 21) {
     document.getElementById("player-message").innerHTML =
       "Blackjack! Player wins!";
   }
-  if (dealerCount === 21) {
+  if (dealerCount === 21 && playerCount !== 21) {
+    document.getElementById(
+      "dealer-cards"
+    ).firstChild.className = `pcard-${cardClass}`;
     document.getElementById("dealer-message").innerHTML =
       "Blackjack! Dealer wins!";
   }
@@ -277,6 +292,8 @@ function reset() {
 
 // Function to initialize game
 function gameStart() {
+  let cardClass;
+  let secondClass;
   // Set Dealer and Player names on screen
   document.getElementById("dealer-name").innerHTML = dealer.name;
   document.getElementById("player-name").innerHTML = player.name;
@@ -295,9 +312,14 @@ function gameStart() {
     if (dealer.hand.length < 2) {
       dealer.hand.push(newDeck.deal());
       document.getElementById("dealer-cards").innerHTML = dealer.hand
-        .map((card) => {
-          let cardClass = `${card.cardType.toLowerCase()}${card.cardSuit[0]}`;
-          return `<div class='pcard-${cardClass}'>` + "" + `</div>`;
+        .map((card, index) => {
+          if (index === 0) {
+            cardClass = `${card.cardType.toLowerCase()}${card.cardSuit[0]}`;
+            return `<div class='pcard-back'>` + "" + `</div>`;
+          } else {
+            secondClass = `${card.cardType.toLowerCase()}${card.cardSuit[0]}`;
+            return `<div class='pcard-${secondClass}'>` + "" + `</div>`;
+          }
         })
         .join("");
     }
@@ -307,13 +329,13 @@ function gameStart() {
   let playerCount = player.handSum();
 
   document.getElementById(
-    "dealer-count"
-  ).innerHTML = `Dealer count is ${dealerCount}`;
-  document.getElementById(
     "player-count"
   ).innerHTML = `Your card count is currently ${playerCount}`;
   // Check if Dealer has blackjack
   if (dealerCount === 21 && playerCount !== 21) {
+    document.getElementById(
+      "dealer-cards"
+    ).firstChild.className = `pcard-${cardClass}`;
     document.getElementById("dealer-message").innerHTML =
       "Blackjack! Dealer wins!";
     document.getElementById("hit-btn").setAttribute("disabled", true);
