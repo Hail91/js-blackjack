@@ -153,6 +153,16 @@ function dealerHit() {
 
   dealer.hand.push(nextCard);
   handTotal += nextCard.cardValue;
+
+  if (handTotal > 21) {
+    dealer.hand.map((card) => {
+      if (card.cardType === "A") {
+        card.cardValue = 1;
+      }
+    });
+    handTotal = dealer.handSum();
+  }
+
   // Re-render new hand
   document.getElementById("dealer-cards").innerHTML = dealer.hand
     .map((card) => {
