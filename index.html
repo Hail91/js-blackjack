@@ -10,28 +10,32 @@
     <title>Blackjack</title>
   </head>
   <body>
-    <h1>Blackgame game to go here!</h1>
-    <button onclick="gameStart()">Start Game!</button>
-    <div class="dealer-container">
-      <h1 id="dealer-name"></h1>
-      <div id="dealer-cards"></div>
-      <div>
-        <p id="dealer-count"></p>
+    <div class="game-container">
+      <h1>Blackgame game to go here!</h1>
+      <div class="dealer-container">
+        <h1 id="dealer-name"></h1>
+        <div id="dealer-cards"></div>
+        <div>
+          <p id="dealer-count"></p>
+        </div>
+        <p id="dealer-message"></p>
       </div>
-      <p id="dealer-message"></p>
-    </div>
-    <div class="deck">
-      <div id="game-deck"></div>
-    </div>
-    <div class="player-container">
-      <h1 id="player-name"></h1>
-      <div id="player-cards"></div>
-      <div>
-        <p id="player-count"></p>
+      <div class="deck">
+        <div id="game-deck"></div>
       </div>
-      <p id="player-message">Please make your move</p>
-      <button id="hit-btn" onclick="playerHit()">Hit</button>
-      <button id="stay-btn" onclick="stay()">Stay</button>
+      <div class="player-container">
+        <h1 id="player-name"></h1>
+        <div id="player-cards"></div>
+        <div>
+          <p id="player-count"></p>
+        </div>
+        <p id="player-message">Please make your move</p>
+        <div class="btn-container">
+          <button id="hit-btn" onclick="playerHit()">Hit</button>
+          <button id="stay-btn" onclick="stay()">Stay</button>
+        </div>
+      </div>
+      <button class="game-start-btn" onclick="gameStart()">Start Game!</button>
     </div>
     <!-- Script tags here at base of body -->
     <script type="text/javascript" src="./scripts/gameLogic.js"></script>

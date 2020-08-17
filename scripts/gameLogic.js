@@ -153,10 +153,6 @@ function dealerHit() {
   let handTotal = dealer.handSum();
   let nextCard = newDeck.deal();
 
-  if (nextCard.cardType === "A") {
-    nextCard.cardValue = 1;
-  }
-
   dealer.hand.push(nextCard);
   handTotal += nextCard.cardValue;
 
@@ -193,10 +189,6 @@ function dealerHit() {
 function playerHit() {
   let handTotal = player.handSum();
   let nextCard = newDeck.deal();
-
-  if (nextCard.cardType === "A") {
-    nextCard.cardValue = 1;
-  }
 
   player.hand.push(nextCard);
   handTotal += nextCard.cardValue;
