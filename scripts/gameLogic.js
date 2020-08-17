@@ -146,8 +146,12 @@ function stay() {
 function dealerHit() {
   let handTotal = dealer.handSum();
   let nextCard = newDeck.deal();
+
+  if (nextCard.cardType === "A") {
+    nextCard.cardValue = 1;
+  }
+
   dealer.hand.push(nextCard);
-  console.log(newDeck.deck.length);
   handTotal += nextCard.cardValue;
   // Re-render new hand
   document.getElementById("dealer-cards").innerHTML = dealer.hand
@@ -173,9 +177,21 @@ function dealerHit() {
 function playerHit() {
   let handTotal = player.handSum();
   let nextCard = newDeck.deal();
+
+  if (nextCard.cardType === "A") {
+    nextCard.cardValue = 1;
+  }
+
   player.hand.push(nextCard);
-  console.log(newDeck.deck.length);
   handTotal += nextCard.cardValue;
+  if (handTotal > 21) {
+    player.hand.map((card) => {
+      if (card.cardType === "A") {
+        card.cardValue = 1;
+      }
+    });
+    handTotal = player.handSum();
+  }
   // Re-render new hand
   document.getElementById("player-cards").innerHTML = player.hand
     .map((card) => {
