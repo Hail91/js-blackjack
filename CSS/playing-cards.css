@@ -1,3 +1,9 @@
+@import url("https://fonts.googleapis.com/css2?family=Chelsea+Market&display=swap");
+
+body {
+  font-family: "Chelsea Market", cursive;
+}
+
 *[class^="pcard-"],
 *[class*=" pcard-"] {
   background-repeat: no-repeat;
@@ -10,7 +16,8 @@
 }
 
 .dealer-container h1 {
-  text-align: center;
+  text-align: left;
+  margin-left: 5.8rem;
 }
 
 #dealer-count {
@@ -38,7 +45,8 @@
 }
 
 .player-container h1 {
-  text-align: center;
+  text-align: left;
+  margin-left: 5.8rem;
 }
 
 #player-count {
@@ -66,8 +74,27 @@
   justify-content: space-evenly;
 }
 
+/* Button styles */
 .game-start-btn {
-  width: 10%;
+  width: 3.5%;
+  cursor: pointer;
+  padding: 0.2rem 0 0.2rem 0;
+  background-color: #3895d3;
+  color: white;
+  border: 1px solid #3895d3;
+  border-radius: 3px;
+}
+
+.next-hand-btn {
+  width: 11.3%;
+  align-self: center;
+  margin-bottom: 1rem;
+  cursor: pointer;
+  padding: 0.2rem 0 0.2rem 0;
+  background-color: #3895d3;
+  color: white;
+  border: 1px solid #3895d3;
+  border-radius: 3px;
 }
 
 .btn-container {
@@ -78,8 +105,18 @@
 
 .btn-container button {
   margin-bottom: 1rem;
-  width: 6rem;
+  width: 5rem;
   cursor: pointer;
+  padding: 0.2rem 0 0.2rem 0;
+  background-color: #3895d3;
+  color: white;
+  border: 1px solid #3895d3;
+  border-radius: 3px;
+}
+
+button:focus {
+  border: none;
+  outline: none;
 }
 
 /* Playing Card SVG styles */
