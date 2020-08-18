@@ -180,7 +180,7 @@ function Hit(target) {
   if (handTotal > 21) {
     document.getElementById(
       `${target.name}-message`
-    ).innerHTML = `Bust! ${target.name} wins!`;
+    ).innerHTML = `Bust! Dealer wins!`;
     document.getElementById(
       `${target.name}-count`
     ).innerHTML = `${target.name} card count is now ${handTotal}`;

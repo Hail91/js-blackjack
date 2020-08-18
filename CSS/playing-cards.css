@@ -1,3 +1,5 @@
+@import url("https://fonts.googleapis.com/css2?family=Chelsea+Market&display=swap");
+
 *[class^="pcard-"],
 *[class*=" pcard-"] {
   background-repeat: no-repeat;
@@ -66,7 +68,15 @@
   justify-content: space-evenly;
 }
 
+.game-container h1 {
+  font-family: "Chelsea Market", cursive;
+}
+
 .game-start-btn {
+  width: 10%;
+}
+
+.next-hand-btn {
   width: 10%;
 }
 
