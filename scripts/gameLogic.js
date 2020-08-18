@@ -110,6 +110,7 @@ const player = new Player("player");
 // Create Button to reset and deal new hand
 let nextHandBtn = document.createElement("button");
 nextHandBtn.setAttribute("id", "next-hand");
+nextHandBtn.setAttribute("class", "next-hand-btn");
 nextHandBtn.innerHTML = "Next Hand";
 nextHandBtn.addEventListener("click", reset);
 let playerCont = document.getElementsByClassName("player-container")[0];

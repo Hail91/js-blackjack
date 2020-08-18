@@ -73,11 +73,25 @@
 }
 
 .game-start-btn {
-  width: 10%;
+  width: 3.5%;
+  cursor: pointer;
+  padding: 0.2rem 0 0.2rem 0;
+  background-color: #3895d3;
+  color: white;
+  border: 1px solid #3895d3;
+  border-radius: 3px;
 }
 
 .next-hand-btn {
-  width: 10%;
+  width: 11.3%;
+  align-self: center;
+  margin-bottom: 1rem;
+  cursor: pointer;
+  padding: 0.2rem 0 0.2rem 0;
+  background-color: #3895d3;
+  color: white;
+  border: 1px solid #3895d3;
+  border-radius: 3px;
 }
 
 .btn-container {
@@ -88,8 +102,13 @@
 
 .btn-container button {
   margin-bottom: 1rem;
-  width: 6rem;
+  width: 5rem;
   cursor: pointer;
+  padding: 0.2rem 0 0.2rem 0;
+  background-color: #3895d3;
+  color: white;
+  border: 1px solid #3895d3;
+  border-radius: 3px;
 }
 
 /* Playing Card SVG styles */
