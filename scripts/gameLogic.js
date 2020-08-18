@@ -2,7 +2,7 @@
 // Need to bring in Player and Dealer.
 class Dealer {
   constructor() {
-    this.name = "Dealer";
+    this.name = "dealer";
     this.hand = [];
   }
   // Get total value of current hand
@@ -104,10 +104,9 @@ class Deck {
 const newDeck = new Deck();
 // Shuffle Deck
 newDeck.shuffle();
-console.log(newDeck.deck);
 // Initialize Player and Dealer
 const dealer = new Dealer();
-const player = new Player("Player");
+const player = new Player("player");
 // Create Button to reset and deal new hand
 let nextHandBtn = document.createElement("button");
 nextHandBtn.setAttribute("id", "next-hand");
@@ -132,7 +131,7 @@ function stay() {
   let playerCount = player.handSum();
   // Deal will draw cards until dealer either has 17/18/19/20/21, or busts. (hand > 21)
   while (dealerCount < 17) {
-    dealerHit();
+    Hit("dealer");
     dealerCount = dealer.handSum();
   }
   if (dealerCount > playerCount && dealerCount <= 21) {
@@ -149,24 +148,29 @@ function stay() {
 }
 
 // Function to allow Dealer to take a card.
-function dealerHit() {
-  let handTotal = dealer.handSum();
+function Hit(target) {
+  // Conditional check for target
+  if (target === "dealer") {
+    target = dealer;
+  } else {
+    target = player;
+  }
+  let handTotal = target.handSum();
   let nextCard = newDeck.deal();
 
-  dealer.hand.push(nextCard);
+  target.hand.push(nextCard);
   handTotal += nextCard.cardValue;
 
   if (handTotal > 21) {
-    dealer.hand.map((card) => {
+    target.hand.map((card) => {
       if (card.cardType === "A") {
         card.cardValue = 1;
       }
     });
-    handTotal = dealer.handSum();
+    handTotal = target.handSum();
   }
-
   // Re-render new hand
-  document.getElementById("dealer-cards").innerHTML = dealer.hand
+  document.getElementById(`${target.name}-cards`).innerHTML = target.hand
     .map((card) => {
       let cardClass = `${card.cardType.toLowerCase()}${card.cardSuit[0]}`;
       return `<div class='pcard-${cardClass}'>` + "" + `</div>`;
@@ -174,50 +178,16 @@ function dealerHit() {
     .join("");
   // Conditional logic to take a card (this function will be called if user presses the 'hit' button on the UI)
   if (handTotal > 21) {
-    document.getElementById("dealer-message").innerHTML = "Bust! Player wins!";
     document.getElementById(
-      "dealer-count"
-    ).innerHTML = `Dealer card count is now ${handTotal}`;
+      `${target.name}-message`
+    ).innerHTML = `Bust! ${target.name} wins!`;
+    document.getElementById(
+      `${target.name}-count`
+    ).innerHTML = `${target.name} card count is now ${handTotal}`;
   } else {
     document.getElementById(
-      "dealer-count"
-    ).innerHTML = `Dealer card count is now ${handTotal}`;
-  }
-}
-
-// Function to allow user to hit, taking another card.
-function playerHit() {
-  let handTotal = player.handSum();
-  let nextCard = newDeck.deal();
-
-  player.hand.push(nextCard);
-  handTotal += nextCard.cardValue;
-  if (handTotal > 21) {
-    player.hand.map((card) => {
-      if (card.cardType === "A") {
-        card.cardValue = 1;
-      }
-    });
-    handTotal = player.handSum();
-  }
-  // Re-render new hand
-  document.getElementById("player-cards").innerHTML = player.hand
-    .map((card) => {
-      let cardClass = `${card.cardType.toLowerCase()}${card.cardSuit[0]}`;
-      return `<div class='pcard-${cardClass}'>` + "" + `</div>`;
-    })
-    .join("");
-  // Conditional logic to take a card (this function will be called if user presses the 'hit' button on the UI)
-  if (handTotal > 21) {
-    document.getElementById("player-message").innerHTML = "Bust! Dealer wins!";
-    document.getElementById(
-      "player-count"
-    ).innerHTML = `Your card count is now ${handTotal}`;
-  } else {
-    document.getElementById("player-message").innerHTML = "Make your next move";
-    document.getElementById(
-      "player-count"
-    ).innerHTML = `Your card count is now ${handTotal}`;
+      `${target.name}-count`
+    ).innerHTML = `${target.name} card count is now ${handTotal}`;
   }
 }
 
