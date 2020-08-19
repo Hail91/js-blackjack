@@ -334,8 +334,8 @@ function gameStart() {
     ).firstChild.className = `pcard-${cardClass}`;
     document.getElementById("dealer-message").innerHTML =
       "Blackjack! Dealer wins!";
-    document.getElementById("hit-btn").setAttribute("disabled", true);
-    document.getElementById("stay-btn").setAttribute("disabled", true);
+    document.getElementById("hit-btn").className = "hide-btn";
+    document.getElementById("stay-btn").className = "hide-btn";
   }
   // Check if User has blackjack
   if (playerCount === 21 && dealerCount !== 21) {
