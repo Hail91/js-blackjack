@@ -181,7 +181,7 @@ function Hit(target) {
   target.hand.map((card, index) => {
     let cardClass = `${card.cardType.toLowerCase()}${card.cardSuit[0]}`;
     let container = document.createElement("div");
-    container.classList.add(`pcard-${cardClass}`, "slide-in-right");
+    container.classList.add(`pcard-${cardClass}`);
     if (index === target.hand.length - 1) {
       document.getElementById(`${target.name}-cards`).appendChild(container);
     }
