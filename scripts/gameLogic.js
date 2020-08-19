@@ -121,12 +121,14 @@ playerCont.appendChild(nextHandBtn);
 
 // Function to stay
 function stay() {
-  document.getElementById("dealer-cards").innerHTML = dealer.hand
-    .map((card) => {
+  dealer.hand.map((card, index) => {
+    if (index === 0) {
       let cardClass = `${card.cardType.toLowerCase()}${card.cardSuit[0]}`;
-      return `<div class='pcard-${cardClass}'>` + "" + `</div>`;
-    })
-    .join("");
+      document.getElementById(
+        "dealer-cards"
+      ).firstChild.className = `pcard-${cardClass}`;
+    }
+  });
   // If player decides to stay, disable the hit/stay buttons
   document.getElementById("hit-btn").setAttribute("disabled", true);
   document.getElementById("stay-btn").setAttribute("disabled", true);
@@ -176,13 +178,14 @@ function Hit(target) {
     });
     handTotal = target.handSum();
   }
-  // Re-render new hand
-  document.getElementById(`${target.name}-cards`).innerHTML = target.hand
-    .map((card) => {
-      let cardClass = `${card.cardType.toLowerCase()}${card.cardSuit[0]}`;
-      return `<div class='pcard-${cardClass}'>` + "" + `</div>`;
-    })
-    .join("");
+  target.hand.map((card, index) => {
+    let cardClass = `${card.cardType.toLowerCase()}${card.cardSuit[0]}`;
+    let container = document.createElement("div");
+    container.classList.add(`pcard-${cardClass}`);
+    if (index === target.hand.length - 1) {
+      document.getElementById(`${target.name}-cards`).appendChild(container);
+    }
+  });
   // Conditional logic to take a card (this function will be called if user presses the 'hit' button on the UI)
   if (handTotal > 21) {
     if (handTotal > 21 && target.name === "player") {
