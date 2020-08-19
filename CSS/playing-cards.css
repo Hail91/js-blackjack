@@ -36,6 +36,8 @@ body {
 #dealer-cards div {
   height: 12rem;
   width: 40%;
+  animation-duration: 2s;
+  animation-name: slide-in-left;
 }
 
 /* player cards specific styles */
@@ -65,6 +67,8 @@ body {
 #player-cards div {
   width: 40%;
   height: 12rem;
+  animation-duration: 2s;
+  animation-name: slide-in-right;
 }
 
 /* Main game container styles */
@@ -141,6 +145,26 @@ button:focus {
 /* Hide button style to be used conditionally */
 .hide-btn {
   display: none;
+}
+
+/* Animate cards into position */
+@keyframes slide-in-right {
+  from {
+    transform: translateX(-400%);
+  }
+
+  to {
+    transform: translateX(0%);
+  }
+}
+
+@keyframes slide-in-left {
+  from {
+    transform: translateX(400%);
+  }
+  to {
+    transform: translateX(0%);
+  }
 }
 
 /* Playing Card SVG styles */

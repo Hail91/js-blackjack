@@ -177,12 +177,20 @@ function Hit(target) {
     handTotal = target.handSum();
   }
   // Re-render new hand
-  document.getElementById(`${target.name}-cards`).innerHTML = target.hand
-    .map((card) => {
-      let cardClass = `${card.cardType.toLowerCase()}${card.cardSuit[0]}`;
-      return `<div class='pcard-${cardClass}'>` + "" + `</div>`;
-    })
-    .join("");
+  // document.getElementById(`${target.name}-cards`).innerHTML = target.hand
+  //   .map((card) => {
+  //     let cardClass = `${card.cardType.toLowerCase()}${card.cardSuit[0]}`;
+  //     return `<div class='pcard-${cardClass}'>` + "" + `</div>`;
+  //   })
+  //   .join("");
+  target.hand.map((card, index) => {
+    let cardClass = `${card.cardType.toLowerCase()}${card.cardSuit[0]}`;
+    let container = document.createElement("div");
+    container.classList.add(`pcard-${cardClass}`, "slide-in-right");
+    if (index === target.hand.length - 1) {
+      document.getElementById(`${target.name}-cards`).appendChild(container);
+    }
+  });
   // Conditional logic to take a card (this function will be called if user presses the 'hit' button on the UI)
   if (handTotal > 21) {
     if (handTotal > 21 && target.name === "player") {
