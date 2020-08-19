@@ -320,4 +320,13 @@ function gameStart() {
   }
   // Hide button from DOM after game is initialized.
   document.getElementsByClassName("game-start-btn")[0].style.display = "none";
+
+  if (playerCount === 21 && dealerCount === 21) {
+    document.getElementById("player-message").innerHTML = "Push!";
+    document.getElementById("dealer-message").innerHTML = "Push!";
+    document.getElementById("hit-btn").className = "hide-btn";
+    document.getElementById("stay-btn").className = "hide-btn";
+  }
+  // Hide button from DOM after game is initialized.
+  document.getElementsByClassName("game-start-btn")[0].style.display = "none";
 }
