@@ -11,31 +11,50 @@
   </head>
   <body>
     <div class="game-container">
-      <h1>Blackjack</h1>
-      <div class="dealer-container">
-        <h1 id="dealer-name"></h1>
-        <div id="dealer-cards"></div>
-        <div>
-          <p id="dealer-count"></p>
+      <section class="stats-container">
+        <h1>Session Stats</h1>
+        <p>Wins: <span id="stats-wins"></span></p>
+        <p>Losses: <span id="stats-losses"></span></p>
+        <p>Pushes: <span id="stats-pushes"></span></p>
+      </section>
+      <div class="board">
+        <h1>Blackjack</h1>
+        <div class="dealer-container">
+          <h1 id="dealer-name"></h1>
+          <div id="dealer-cards"></div>
+          <div>
+            <p id="dealer-count"></p>
+          </div>
+          <p id="dealer-message"></p>
         </div>
-        <p id="dealer-message"></p>
-      </div>
-      <div class="deck">
-        <div id="game-deck"></div>
-      </div>
-      <div class="player-container">
-        <h1 id="player-name"></h1>
-        <div id="player-cards"></div>
-        <div>
-          <p id="player-count"></p>
+        <div class="deck">
+          <div id="game-deck"></div>
         </div>
-        <p id="player-message">Please make your move</p>
-        <div class="btn-container">
-          <button id="hit-btn" onclick="Hit('player')">Hit</button>
-          <button id="stay-btn" onclick="stay()">Stay</button>
+        <div class="player-container">
+          <h1 id="player-name"></h1>
+          <div id="player-cards"></div>
+          <div>
+            <p id="player-count"></p>
+          </div>
+          <p id="player-message">Please make your move</p>
+          <div class="btn-container">
+            <button id="hit-btn" onclick="Hit('player')">Hit</button>
+            <button id="stay-btn" onclick="stay()">Stay</button>
+          </div>
         </div>
+        <button class="game-start-btn" onclick="gameStart()">
+          Start Game!
+        </button>
       </div>
-      <button class="game-start-btn" onclick="gameStart()">Start Game!</button>
+      <section class="rules-section">
+        <h1>Rules</h1>
+        <ul>
+          <li>Six card deck used.</li>
+          <li>Dealer does not hit on soft 17.</li>
+          <li>If both dealer and player have Blackjack, it's a push.</li>
+          <li>Have fun!</li>
+        </ul>
+      </section>
     </div>
     <!-- Script tags here at base of body -->
     <script type="text/javascript" src="./scripts/gameLogic.js"></script>

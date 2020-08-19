@@ -17,6 +17,9 @@ class Dealer {
 class Player {
   constructor(name) {
     this.name = name;
+    this.wins = 0;
+    this.losses = 0;
+    this.pushes = 0;
     this.hand = [];
   }
   handSum() {
@@ -136,14 +139,17 @@ function stay() {
     dealerCount = dealer.handSum();
   }
   if (dealerCount > playerCount && dealerCount <= 21) {
+    document.getElementById("stats-losses").innerHTML = player.losses += 1;
     alert("Dealer Wins!");
   } else if (playerCount > dealerCount && playerCount <= 21) {
+    document.getElementById("stats-wins").innerHTML = player.wins += 1;
     alert("Player Wins!");
   } else if (
     playerCount === dealerCount &&
     playerCount <= 21 &&
     dealerCount <= 21
   ) {
+    document.getElementById("stats-pushes").innerHTML = player.pushes += 1;
     alert("Push!");
   }
 }
@@ -179,12 +185,17 @@ function Hit(target) {
     .join("");
   // Conditional logic to take a card (this function will be called if user presses the 'hit' button on the UI)
   if (handTotal > 21) {
-    document.getElementById(
-      `${target.name}-message`
-    ).innerHTML = `Bust! Dealer wins!`;
+    if (handTotal > 21 && target.name === "player") {
+      document.getElementById("stats-losses").innerHTML = player.losses += 1;
+    } else if (handTotal > 21 && target.name === "dealer") {
+      document.getElementById("stats-wins").innerHTML = player.wins += 1;
+    }
+    document.getElementById(`${target.name}-message`).innerHTML = `Bust!`;
     document.getElementById(
       `${target.name}-count`
     ).innerHTML = `${target.name} card count is now ${handTotal}`;
+    document.getElementById("hit-btn").className = "hide-btn";
+    document.getElementById("stay-btn").className = "hide-btn";
   } else {
     document.getElementById(
       `${target.name}-count`
@@ -196,6 +207,9 @@ function Hit(target) {
 function reset() {
   let cardClass;
   let secondClass;
+  document.getElementById("hit-btn").classList.remove("hide-btn");
+  document.getElementById("stay-btn").classList.remove("hide-btn");
+  // Re-enable buttons after adding back to DOM
   document.getElementById("hit-btn").removeAttribute("disabled");
   document.getElementById("stay-btn").removeAttribute("disabled");
   document.getElementById("dealer-message").innerHTML = "";
@@ -241,15 +255,28 @@ function reset() {
   document.getElementById("player-message").innerHTML = "";
   // Check if User has blackjack
   if (playerCount === 21 && dealerCount !== 21) {
+    document.getElementById("stats-wins").innerHTML = player.wins += 1;
     document.getElementById("player-message").innerHTML =
       "Blackjack! Player wins!";
+    document.getElementById("hit-btn").className = "hide-btn";
+    document.getElementById("stay-btn").className = "hide-btn";
   }
   if (dealerCount === 21 && playerCount !== 21) {
+    document.getElementById("stats-losses").innerHTML = player.losses += 1;
     document.getElementById(
       "dealer-cards"
     ).firstChild.className = `pcard-${cardClass}`;
     document.getElementById("dealer-message").innerHTML =
       "Blackjack! Dealer wins!";
+    document.getElementById("hit-btn").className = "hide-btn";
+    document.getElementById("stay-btn").className = "hide-btn";
+  }
+  if (playerCount === 21 && dealerCount === 21) {
+    document.getElementById("stats-pushes").innerHTML = player.pushes += 1;
+    document.getElementById("player-message").innerHTML = "Push!";
+    document.getElementById("dealer-message").innerHTML = "Push!";
+    document.getElementById("hit-btn").className = "hide-btn";
+    document.getElementById("stay-btn").className = "hide-btn";
   }
 }
 
@@ -260,6 +287,11 @@ function gameStart() {
   // Set Dealer and Player names on screen
   document.getElementById("dealer-name").innerHTML = dealer.name;
   document.getElementById("player-name").innerHTML = player.name;
+
+  // Initialize session stats
+  document.getElementById("stats-wins").innerHTML = player.wins;
+  document.getElementById("stats-losses").innerHTML = player.losses;
+  document.getElementById("stats-pushes").innerHTML = player.pushes;
 
   // Deal cards to dealer and player (Player gets 1, then dealer, then player until both have 2 cards)
   while (player.hand.length < 2 && dealer.hand.length < 2) {
@@ -296,19 +328,33 @@ function gameStart() {
   ).innerHTML = `Your card count is currently ${playerCount}`;
   // Check if Dealer has blackjack
   if (dealerCount === 21 && playerCount !== 21) {
+    document.getElementById("stats-losses").innerHTML = player.losses += 1;
     document.getElementById(
       "dealer-cards"
     ).firstChild.className = `pcard-${cardClass}`;
     document.getElementById("dealer-message").innerHTML =
       "Blackjack! Dealer wins!";
-    document.getElementById("hit-btn").setAttribute("disabled", true);
-    document.getElementById("stay-btn").setAttribute("disabled", true);
+    document.getElementById("hit-btn").className = "hide-btn";
+    document.getElementById("stay-btn").className = "hide-btn";
   }
   // Check if User has blackjack
   if (playerCount === 21 && dealerCount !== 21) {
+    document.getElementById("stats-wins").innerHTML = player.wins += 1;
     document.getElementById("player-message").innerHTML =
       "Blackjack! Player wins!";
-    document.getElementById("hit-btn").setAttribute("disabled", true);
-    document.getElementById("stay-btn").setAttribute("disabled", true);
+    document.getElementById("hit-btn").className = "hide-btn";
+    document.getElementById("stay-btn").className = "hide-btn";
   }
+  // Hide button from DOM after game is initialized.
+  document.getElementsByClassName("game-start-btn")[0].style.display = "none";
+
+  if (playerCount === 21 && dealerCount === 21) {
+    document.getElementById("stats-pushes").innerHTML = player.pushes += 1;
+    document.getElementById("player-message").innerHTML = "Push!";
+    document.getElementById("dealer-message").innerHTML = "Push!";
+    document.getElementById("hit-btn").className = "hide-btn";
+    document.getElementById("stay-btn").className = "hide-btn";
+  }
+  // Hide button from DOM after game is initialized.
+  document.getElementsByClassName("game-start-btn")[0].style.display = "none";
 }
