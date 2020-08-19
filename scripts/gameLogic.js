@@ -179,12 +179,12 @@ function Hit(target) {
     .join("");
   // Conditional logic to take a card (this function will be called if user presses the 'hit' button on the UI)
   if (handTotal > 21) {
-    document.getElementById(
-      `${target.name}-message`
-    ).innerHTML = `Bust! Dealer wins!`;
+    document.getElementById(`${target.name}-message`).innerHTML = `Bust!`;
     document.getElementById(
       `${target.name}-count`
     ).innerHTML = `${target.name} card count is now ${handTotal}`;
+    document.getElementById("hit-btn").className = "hide-btn";
+    document.getElementById("stay-btn").className = "hide-btn";
   } else {
     document.getElementById(
       `${target.name}-count`
@@ -196,6 +196,9 @@ function Hit(target) {
 function reset() {
   let cardClass;
   let secondClass;
+  document.getElementById("hit-btn").classList.remove("hide-btn");
+  document.getElementById("stay-btn").classList.remove("hide-btn");
+  // Re-enable buttons after adding back to DOM
   document.getElementById("hit-btn").removeAttribute("disabled");
   document.getElementById("stay-btn").removeAttribute("disabled");
   document.getElementById("dealer-message").innerHTML = "";
@@ -243,6 +246,8 @@ function reset() {
   if (playerCount === 21 && dealerCount !== 21) {
     document.getElementById("player-message").innerHTML =
       "Blackjack! Player wins!";
+    document.getElementById("hit-btn").className = "hide-btn";
+    document.getElementById("stay-btn").className = "hide-btn";
   }
   if (dealerCount === 21 && playerCount !== 21) {
     document.getElementById(
@@ -250,6 +255,8 @@ function reset() {
     ).firstChild.className = `pcard-${cardClass}`;
     document.getElementById("dealer-message").innerHTML =
       "Blackjack! Dealer wins!";
+    document.getElementById("hit-btn").className = "hide-btn";
+    document.getElementById("stay-btn").className = "hide-btn";
   }
 }
 
@@ -308,7 +315,9 @@ function gameStart() {
   if (playerCount === 21 && dealerCount !== 21) {
     document.getElementById("player-message").innerHTML =
       "Blackjack! Player wins!";
-    document.getElementById("hit-btn").setAttribute("disabled", true);
-    document.getElementById("stay-btn").setAttribute("disabled", true);
+    document.getElementById("hit-btn").className = "hide-btn";
+    document.getElementById("stay-btn").className = "hide-btn";
   }
+  // Hide button from DOM after game is initialized.
+  document.getElementsByClassName("game-start-btn")[0].style.display = "none";
 }
