@@ -54,7 +54,7 @@ class Deck {
     ];
     let numDecks = 0;
     let color = "red";
-    // Now need to loop over all cards for each suit and push to the deck initialized on line 6.
+    // Now need to loop over all cards for each suit and push to the deck.
     while (numDecks < 6) {
       suits.forEach((suit) => {
         for (let v = 0; v < values.length; v++) {
@@ -293,6 +293,7 @@ function InitializeHand() {
     hitBtn.className = "hide-btn";
     stayBtn.className = "hide-btn";
   }
+  // Repeat for dealer blackjack
   if (dealerCount === 21 && playerCount !== 21) {
     statLosses.innerHTML = player.losses += 1;
     document.getElementById(
@@ -303,6 +304,7 @@ function InitializeHand() {
     hitBtn.className = "hide-btn";
     stayBtn.className = "hide-btn";
   }
+  // UI updates if both have blackjack
   if (playerCount === 21 && dealerCount === 21) {
     statPushes.innerHTML = player.pushes += 1;
     document.getElementById("player-message").innerHTML = "Push!";
