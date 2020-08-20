@@ -31,6 +31,7 @@ body {
 
 #dealer-cards {
   display: flex;
+  justify-content: center;
 }
 
 #dealer-cards div {
@@ -62,6 +63,7 @@ body {
 
 #player-cards {
   display: flex;
+  justify-content: center;
 }
 
 #player-cards div {
