@@ -186,6 +186,12 @@ button:focus {
   .dealer-container {
     width: 100vw;
   }
+  .game-start-btn {
+    width: 18%;
+  }
+  .next-hand-btn {
+    width: 18%;
+  }
 }
 
 /* Playing Card SVG styles */
