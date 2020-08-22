@@ -77,6 +77,8 @@ body {
 .game-container {
   display: flex;
   justify-content: space-evenly;
+  flex-direction: column;
+  align-items: center;
 }
 
 .rules-section h1 {
@@ -85,6 +87,13 @@ body {
 
 .rules-section li {
   margin-bottom: 1rem;
+}
+
+.rules-stats {
+  display: flex;
+  justify-content: center;
+  justify-content: space-evenly;
+  width: 100%;
 }
 
 .board {
@@ -166,6 +175,16 @@ button:focus {
   }
   to {
     transform: translateX(0%);
+  }
+}
+
+/* Media Queries */
+@media (max-width: 500px) {
+  .player-container {
+    width: 100vw;
+  }
+  .dealer-container {
+    width: 100vw;
   }
 }
 
