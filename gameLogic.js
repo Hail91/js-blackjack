@@ -162,21 +162,9 @@ export function InitializeHand() {
     }
   }
   // Handle cases where two aces are dealt right off the bat
-  if (player.hand.every((el) => el.cardType === "A")) {
-    player.hand.map((card) => {
-      if (card.cardType === "A") {
-        card.cardValue = 1;
-      }
-    });
-  }
+  checkAces(player.hand);
   // repeat for dealer hand
-  if (dealer.hand.every((el) => el.cardType === "A")) {
-    dealer.hand.map((card) => {
-      if (card.cardType === "A") {
-        card.cardValue = 1;
-      }
-    });
-  }
+  checkAces(dealer.hand);
   // Get hand count for both and render
   let dealerCount = dealer.handSum();
   let playerCount = player.handSum();
@@ -215,4 +203,14 @@ export function InitializeHand() {
     stayBtn.className = "hide-btn";
   }
   document.getElementsByClassName("game-start-btn")[0].style.display = "none";
+}
+// ** Helper Functions **
+function checkAces(hand) {
+  if (hand.every((el) => el.cardType === "A")) {
+    hand.map((card) => {
+      if (card.cardType === "A") {
+        card.cardValue = 1;
+      }
+    });
+  }
 }
