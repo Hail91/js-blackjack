@@ -161,7 +161,7 @@ export function InitializeHand() {
         .join("");
     }
   }
-
+  // Handle cases where two aces are dealt right off the bat
   if (player.hand.every((el) => el.cardType === "A")) {
     player.hand.map((card) => {
       if (card.cardType === "A") {
@@ -169,6 +169,7 @@ export function InitializeHand() {
       }
     });
   }
+  // repeat for dealer hand
   if (dealer.hand.every((el) => el.cardType === "A")) {
     dealer.hand.map((card) => {
       if (card.cardType === "A") {
