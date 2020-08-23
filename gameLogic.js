@@ -34,9 +34,9 @@ export function stay() {
   dealer.hand.map((card, index) => {
     if (index === 0) {
       let cardClass = `${card.cardType.toLowerCase()}${card.cardSuit[0]}`;
-      document.getElementById(
-        "dealer-cards"
-      ).firstChild.className = `pcard-${cardClass}`;
+      document
+        .getElementById("dealer-cards")
+        .firstChild.classList.add(`pcard-${cardClass}`, "card-flip");
     }
   });
   // If player decides to stay, remove the hit/stay buttons.

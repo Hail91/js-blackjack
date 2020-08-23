@@ -158,6 +158,11 @@ button:focus {
   display: none;
 }
 
+.card-flip {
+  animation-name: card-flip !important;
+  animation-duration: 0.2s !important;
+}
+
 /* Animate cards into position */
 @keyframes slide-in-right {
   from {
@@ -175,6 +180,15 @@ button:focus {
   }
   to {
     transform: translateX(0%);
+  }
+}
+
+@keyframes card-flip {
+  from {
+    transform: rotateY(0deg) rotateX(0deg);
+  }
+  to {
+    transform: rotateY(180deg) rotateX(180deg);
   }
 }
 
