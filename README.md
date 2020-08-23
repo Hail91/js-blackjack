@@ -7,7 +7,6 @@
 
 ## Known issues \*\* denotes issue being worked on.
 
-- Currently, mobile reponsiveness is not completed. For best experience please run on a desktop/laptop.
 - If Dealer is dealt an A/7 combination, the count is not displayed.\*\*
 - If player or dealer is dealt A/A to start, the hand is not handled properly.\*\*
 

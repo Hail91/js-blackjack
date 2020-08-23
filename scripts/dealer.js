@@ -1,9 +1,6 @@
-// Dealer logic here
-"use strict";
-
 class Dealer {
   constructor() {
-    this.name = "Dealer";
+    this.name = "dealer";
     this.hand = [];
   }
   // Get total value of current hand
@@ -15,3 +12,5 @@ class Dealer {
       .reduce((a, b) => a + b);
   }
 }
+
+export default Dealer;
