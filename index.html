@@ -64,6 +64,12 @@
       </section>
     </div>
     <!-- Script tags here at base of body -->
-    <script type="text/javascript" src="./scripts/gameLogic.js"></script>
+    <script type="module">
+      import { Hit, stay, InitializeHand } from "./gameLogic.js";
+      // Probably not an ideal solution, but works for now.
+      window.Hit = Hit;
+      window.stay = stay;
+      window.InitializeHand = InitializeHand;
+    </script>
   </body>
 </html>
