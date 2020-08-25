@@ -5,6 +5,12 @@
 - Clone this repository down to your machine.
 - Navigate into the root directory and open index.html in your preferred browser, you can also run it on localhost if you like.
 
+## Tech Stack
+
+_Front-End_ - HTML | CSS | JavaScript
+
+_Back-End_ - N/A
+
 ## Known issues \*\* denotes issue being worked on.
 
 - If Dealer is dealt an A/7 combination, the count is not displayed.\*\*
