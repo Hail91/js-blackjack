@@ -7,6 +7,8 @@ class Player {
     this.losses = 0;
     this.pushes = 0;
     this.hand = [];
+    this.bankroll = 500;
+    this.bet = 0;
   }
   handSum() {
     return this.hand
@@ -15,6 +17,8 @@ class Player {
       })
       .reduce((a, b) => a + b);
   }
+  // Update bet amount, will be triggered onClick of bet buttons in UI
+  updateBet() {}
 }
 
 export default Player;
