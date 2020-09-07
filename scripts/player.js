@@ -19,10 +19,12 @@ class Player {
   }
   // Update bet amount, will be triggered onClick of bet buttons in UI
   updateBet(amount) {
-    // Update player bet so we can track on UI
-    this.bet += amount;
-    // Reduce current bankroll accordingly
-    this.bankroll -= this.bet;
+    if (this.bankroll >= amount && !(this.bankroll - amount < 0)) {
+      // Update player bet so we can track on UI
+      this.bet += amount;
+      // Reduce current bankroll accordingly
+      this.bankroll -= amount;
+    }
   }
   // Will add a reset bet function as well to keep that functionality contained with the class
   resetBet() {

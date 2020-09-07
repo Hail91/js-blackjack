@@ -39,6 +39,15 @@ function checkAces(hand) {
   }
 }
 
+// Function to make bet
+export function makeBet(amount) {
+  player.updateBet(amount);
+  document.getElementById("player-bet").innerHTML = `Bet: $${player.bet}`;
+  document.getElementById(
+    "player-bankroll"
+  ).innerHTML = `Bankroll:  $${player.bankroll}`;
+}
+
 // Function to stay
 export function stay() {
   // Flip first dealer card after player chooses to stay.
