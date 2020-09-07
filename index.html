@@ -48,6 +48,14 @@
             <button id="hit-btn" onclick="Hit('player')">Hit</button>
             <button id="stay-btn" onclick="stay()">Stay</button>
           </div>
+          <p id="player-bankroll"></p>
+          <p id="player-bet"></p>
+          <div id="bet-container">
+            <button onclick="makeBet(10)" id="10" class="bet">$10</button>
+            <button onclick="makeBet(20)" id="20" class="bet">$20</button>
+            <button onclick="makeBet(50)" id="50" class="bet">$50</button>
+            <button onclick="makeBet(100)" id="100" class="bet">$100</button>
+          </div>
         </div>
         <button class="game-start-btn" onclick="InitializeHand()">
           Start Game!
@@ -65,11 +73,12 @@
     </div>
     <!-- Script tags here at base of body -->
     <script type="module">
-      import { Hit, stay, InitializeHand } from "./gameLogic.js";
+      import { Hit, stay, InitializeHand, makeBet } from "./gameLogic.js";
       // Probably not an ideal solution, but works for now.
       window.Hit = Hit;
       window.stay = stay;
       window.InitializeHand = InitializeHand;
+      window.makeBet = makeBet;
     </script>
   </body>
 </html>

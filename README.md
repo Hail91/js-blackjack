@@ -20,9 +20,9 @@ _Back-End_ - N/A
 - If Dealer is dealt an A/7 combination, the count is not displayed.\*\*
 - If player or dealer is dealt A/A to start, the hand is not handled properly.\*\*
 
-## Future Plans
+## Future Plans \*\* Denotes feature being added
 
-- Player Bankroll.
+- Player Bankroll.\*\*
 - Some form of data persistence with regard to statistics and aforementioned bankroll.
 - Some sort of data visualization for statistics.
 - Ability to double down, as well as split hands.

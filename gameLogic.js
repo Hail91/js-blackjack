@@ -28,6 +28,26 @@ const statPushes = document.getElementById("stats-pushes");
 const hitBtn = document.getElementById("hit-btn");
 const stayBtn = document.getElementById("stay-btn");
 
+// ** Helper Functions **
+function checkAces(hand) {
+  if (hand.every((el) => el.cardType === "A")) {
+    hand.map((card) => {
+      if (card.cardType === "A") {
+        card.cardValue = 1;
+      }
+    });
+  }
+}
+
+// Function to make bet
+export function makeBet(amount) {
+  player.updateBet(amount);
+  document.getElementById("player-bet").innerHTML = `Bet: $${player.bet}`;
+  document.getElementById(
+    "player-bankroll"
+  ).innerHTML = `Bankroll:  $${player.bankroll}`;
+}
+
 // Function to stay
 export function stay() {
   // Flip first dealer card after player chooses to stay.
@@ -127,6 +147,19 @@ export function InitializeHand() {
   stayBtn.removeAttribute("disabled");
   document.getElementById("dealer-message").innerHTML = "";
 
+  // Populate player bankroll on game start
+  document.getElementById(
+    "player-bankroll"
+  ).innerHTML = `Bankroll:  $${player.bankroll}`;
+
+  // Populate current bet amount on game start
+  document.getElementById(
+    "player-bet"
+  ).innerHTML = `Current Bet: $${player.bet}`;
+
+  // Reveal bet options once game starts
+  document.getElementById("bet-container").style.visibility = "visible";
+
   // Initialize session stats
   statWins.innerHTML = player.wins;
   statLosses.innerHTML = player.losses;
@@ -203,14 +236,4 @@ export function InitializeHand() {
     stayBtn.className = "hide-btn";
   }
   document.getElementsByClassName("game-start-btn")[0].style.display = "none";
-}
-// ** Helper Functions **
-function checkAces(hand) {
-  if (hand.every((el) => el.cardType === "A")) {
-    hand.map((card) => {
-      if (card.cardType === "A") {
-        card.cardValue = 1;
-      }
-    });
-  }
 }
