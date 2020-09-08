@@ -38,8 +38,7 @@ function checkAces(hand) {
     });
   }
 }
-
-// Function to make bet
+// ** Bet logic functions **
 export function makeBet(amount) {
   player.updateBet(amount);
   document.getElementById("player-bet").innerHTML = `Bet: $${player.bet}`;
@@ -48,7 +47,15 @@ export function makeBet(amount) {
   ).innerHTML = `Bankroll:  $${player.bankroll}`;
 }
 
-// Function to stay
+export function reset() {
+  player.resetBet();
+  document.getElementById("player-bet").innerHTML = `Bet: $${player.bet}`;
+  document.getElementById(
+    "player-bankroll"
+  ).innerHTML = `Bankroll:  $${player.bankroll}`;
+}
+
+// ** CORE CARD GAME LOGIC **
 export function stay() {
   // Flip first dealer card after player chooses to stay.
   dealer.hand.map((card, index) => {
@@ -71,17 +78,20 @@ export function stay() {
     dealerCount = dealer.handSum();
   }
   if (dealerCount > playerCount && dealerCount <= 21) {
-    statLosses.innerHTML = player.losses += 1;
+    player.lose();
+    statLosses.innerHTML = player.losses;
     alert("Dealer Wins!");
   } else if (playerCount > dealerCount && playerCount <= 21) {
-    statWins.innerHTML = player.wins += 1;
+    player.win();
+    statWins.innerHTML = player.wins;
     alert("Player Wins!");
   } else if (
     playerCount === dealerCount &&
     playerCount <= 21 &&
     dealerCount <= 21
   ) {
-    statPushes.innerHTML = player.pushes += 1;
+    player.push();
+    statPushes.innerHTML = player.pushes;
     alert("Push!");
   }
 }
@@ -119,9 +129,11 @@ export function Hit(target) {
   // Conditional logic to take a card (this function will be called if user presses the 'hit' button on the UI)
   if (handTotal > 21) {
     if (handTotal > 21 && target.name === "player") {
-      statLosses.innerHTML = player.losses += 1;
+      player.lose();
+      statLosses.innerHTML = player.losses;
     } else if (handTotal > 21 && target.name === "dealer") {
-      statWins.innerHTML = player.wins += 1;
+      player.win();
+      statWins.innerHTML = player.wins;
     }
     document.getElementById(`${target.name}-message`).innerHTML = `Bust!`;
     document.getElementById(
@@ -138,6 +150,7 @@ export function Hit(target) {
 
 // Reset function if hand has a conclusion
 export function InitializeHand() {
+  reset();
   let cardClass;
   let secondClass;
   hitBtn.classList.remove("hide-btn");
@@ -210,7 +223,8 @@ export function InitializeHand() {
   document.getElementById("player-message").innerHTML = "";
   // Check if User has blackjack
   if (playerCount === 21 && dealerCount !== 21) {
-    statWins.innerHTML = player.wins += 1;
+    player.win();
+    statWins.innerHTML = player.wins;
     document.getElementById("player-message").innerHTML =
       "Blackjack! Player wins!";
     hitBtn.className = "hide-btn";
@@ -218,7 +232,8 @@ export function InitializeHand() {
   }
   // Repeat for dealer blackjack
   if (dealerCount === 21 && playerCount !== 21) {
-    statLosses.innerHTML = player.losses += 1;
+    player.lose();
+    statLosses.innerHTML = player.losses;
     document.getElementById(
       "dealer-cards"
     ).firstChild.className = `pcard-${cardClass}`;
@@ -229,7 +244,8 @@ export function InitializeHand() {
   }
   // UI updates if both have blackjack
   if (playerCount === 21 && dealerCount === 21) {
-    statPushes.innerHTML = player.pushes += 1;
+    player.push();
+    statPushes.innerHTML = player.pushes;
     document.getElementById("player-message").innerHTML = "Push!";
     document.getElementById("dealer-message").innerHTML = "Push!";
     hitBtn.className = "hide-btn";

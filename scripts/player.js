@@ -30,6 +30,19 @@ class Player {
   resetBet() {
     this.bet = 0;
   }
+  // Method to increment player bankroll if player wins
+  win() {
+    this.bankroll += this.bet * 2;
+    this.wins += 1;
+  }
+  // Method for player push
+  push() {
+    this.bankroll += this.bet;
+    this.pushes += 1;
+  }
+  lose() {
+    this.losses += 1;
+  }
 }
 
 export default Player;
