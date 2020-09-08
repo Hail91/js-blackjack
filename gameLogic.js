@@ -15,7 +15,7 @@ const player = new Player("player");
 let nextHandBtn = document.createElement("button");
 nextHandBtn.setAttribute("id", "next-hand");
 nextHandBtn.setAttribute("class", "next-hand-btn");
-nextHandBtn.innerHTML = "Next Hand";
+nextHandBtn.innerHTML = "Start";
 nextHandBtn.addEventListener("click", InitializeHand);
 let playerCont = document.getElementsByClassName("player-container")[0];
 playerCont.appendChild(nextHandBtn);
@@ -27,6 +27,7 @@ const statPushes = document.getElementById("stats-pushes");
 // Shorts for hit and stay buttons
 const hitBtn = document.getElementById("hit-btn");
 const stayBtn = document.getElementById("stay-btn");
+// Special variable to check whether bet has been made.
 
 // ** Helper Functions **
 function checkAces(hand) {
@@ -38,8 +39,7 @@ function checkAces(hand) {
     });
   }
 }
-
-// Function to make bet
+// ** Bet logic functions **
 export function makeBet(amount) {
   player.updateBet(amount);
   document.getElementById("player-bet").innerHTML = `Bet: $${player.bet}`;
@@ -48,7 +48,15 @@ export function makeBet(amount) {
   ).innerHTML = `Bankroll:  $${player.bankroll}`;
 }
 
-// Function to stay
+export function reset() {
+  player.resetBet();
+  document.getElementById("player-bet").innerHTML = `Bet: $${player.bet}`;
+  document.getElementById(
+    "player-bankroll"
+  ).innerHTML = `Bankroll:  $${player.bankroll}`;
+}
+
+// ** CORE CARD GAME LOGIC **
 export function stay() {
   // Flip first dealer card after player chooses to stay.
   dealer.hand.map((card, index) => {
@@ -71,17 +79,20 @@ export function stay() {
     dealerCount = dealer.handSum();
   }
   if (dealerCount > playerCount && dealerCount <= 21) {
-    statLosses.innerHTML = player.losses += 1;
+    player.lose();
+    statLosses.innerHTML = player.losses;
     alert("Dealer Wins!");
   } else if (playerCount > dealerCount && playerCount <= 21) {
-    statWins.innerHTML = player.wins += 1;
+    player.win();
+    statWins.innerHTML = player.wins;
     alert("Player Wins!");
   } else if (
     playerCount === dealerCount &&
     playerCount <= 21 &&
     dealerCount <= 21
   ) {
-    statPushes.innerHTML = player.pushes += 1;
+    player.push();
+    statPushes.innerHTML = player.pushes;
     alert("Push!");
   }
 }
@@ -119,9 +130,11 @@ export function Hit(target) {
   // Conditional logic to take a card (this function will be called if user presses the 'hit' button on the UI)
   if (handTotal > 21) {
     if (handTotal > 21 && target.name === "player") {
-      statLosses.innerHTML = player.losses += 1;
+      player.lose();
+      statLosses.innerHTML = player.losses;
     } else if (handTotal > 21 && target.name === "dealer") {
-      statWins.innerHTML = player.wins += 1;
+      player.win();
+      statWins.innerHTML = player.wins;
     }
     document.getElementById(`${target.name}-message`).innerHTML = `Bust!`;
     document.getElementById(
@@ -169,30 +182,39 @@ export function InitializeHand() {
   player.hand.length = 0;
   dealer.hand.length = 0;
   // Draw two new cards for both
-  while (player.hand.length < 2 && dealer.hand.length < 2) {
-    if (player.hand.length < 2) {
-      player.hand.push(newDeck.deal());
-      document.getElementById("player-cards").innerHTML = player.hand
-        .map((card) => {
-          let cardClass = `${card.cardType.toLowerCase()}${card.cardSuit[0]}`;
-          return `<div class='pcard-${cardClass}'>` + "" + `</div>`;
-        })
-        .join("");
+  if (player.bet > 0) {
+    while (player.hand.length < 2 && dealer.hand.length < 2) {
+      if (player.hand.length < 2) {
+        player.hand.push(newDeck.deal());
+        document.getElementById("player-cards").innerHTML = player.hand
+          .map((card) => {
+            let cardClass = `${card.cardType.toLowerCase()}${card.cardSuit[0]}`;
+            return `<div class='pcard-${cardClass}'>` + "" + `</div>`;
+          })
+          .join("");
+      }
+      if (dealer.hand.length < 2) {
+        dealer.hand.push(newDeck.deal());
+        document.getElementById("dealer-cards").innerHTML = dealer.hand
+          .map((card, index) => {
+            if (index === 0) {
+              cardClass = `${card.cardType.toLowerCase()}${card.cardSuit[0]}`;
+              return `<div class='pcard-back'>` + "" + `</div>`;
+            } else {
+              secondClass = `${card.cardType.toLowerCase()}${card.cardSuit[0]}`;
+              return `<div class='pcard-${secondClass}'>` + "" + `</div>`;
+            }
+          })
+          .join("");
+      }
     }
-    if (dealer.hand.length < 2) {
-      dealer.hand.push(newDeck.deal());
-      document.getElementById("dealer-cards").innerHTML = dealer.hand
-        .map((card, index) => {
-          if (index === 0) {
-            cardClass = `${card.cardType.toLowerCase()}${card.cardSuit[0]}`;
-            return `<div class='pcard-back'>` + "" + `</div>`;
-          } else {
-            secondClass = `${card.cardType.toLowerCase()}${card.cardSuit[0]}`;
-            return `<div class='pcard-${secondClass}'>` + "" + `</div>`;
-          }
-        })
-        .join("");
-    }
+  } else {
+    document.getElementById("player-message").innerHTML = "";
+    document.getElementById("dealer-message").innerHTML = "";
+    document.getElementById("dealer-count").innerHTML = "";
+    document.getElementById("player-count").innerHTML = "";
+    document.getElementById("dealer-cards").innerHTML = "";
+    document.getElementById("player-cards").innerHTML = "Please make a bet";
   }
   // Handle cases where two aces are dealt right off the bat
   checkAces(player.hand);
@@ -210,7 +232,11 @@ export function InitializeHand() {
   document.getElementById("player-message").innerHTML = "";
   // Check if User has blackjack
   if (playerCount === 21 && dealerCount !== 21) {
-    statWins.innerHTML = player.wins += 1;
+    player.blackjack();
+    statWins.innerHTML = player.wins;
+    document.getElementById(
+      "player-bankroll"
+    ).innerHTML = `Bankroll: $${player.bankroll}`;
     document.getElementById("player-message").innerHTML =
       "Blackjack! Player wins!";
     hitBtn.className = "hide-btn";
@@ -218,10 +244,14 @@ export function InitializeHand() {
   }
   // Repeat for dealer blackjack
   if (dealerCount === 21 && playerCount !== 21) {
-    statLosses.innerHTML = player.losses += 1;
+    player.lose();
+    statLosses.innerHTML = player.losses;
     document.getElementById(
       "dealer-cards"
     ).firstChild.className = `pcard-${cardClass}`;
+    document.getElementById(
+      "player-bankroll"
+    ).innerHTML = `Bankroll: $${player.bankroll}`;
     document.getElementById("dealer-message").innerHTML =
       "Blackjack! Dealer wins!";
     hitBtn.className = "hide-btn";
@@ -229,7 +259,11 @@ export function InitializeHand() {
   }
   // UI updates if both have blackjack
   if (playerCount === 21 && dealerCount === 21) {
-    statPushes.innerHTML = player.pushes += 1;
+    player.push();
+    statPushes.innerHTML = player.pushes;
+    document.getElementById(
+      "player-bankroll"
+    ).innerHTML = `Bankroll: $${player.bankroll}`;
     document.getElementById("player-message").innerHTML = "Push!";
     document.getElementById("dealer-message").innerHTML = "Push!";
     hitBtn.className = "hide-btn";
