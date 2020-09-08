@@ -15,7 +15,7 @@ const player = new Player("player");
 let nextHandBtn = document.createElement("button");
 nextHandBtn.setAttribute("id", "next-hand");
 nextHandBtn.setAttribute("class", "next-hand-btn");
-nextHandBtn.innerHTML = "Next Hand";
+nextHandBtn.innerHTML = "Start";
 nextHandBtn.addEventListener("click", InitializeHand);
 let playerCont = document.getElementsByClassName("player-container")[0];
 playerCont.appendChild(nextHandBtn);
@@ -27,6 +27,7 @@ const statPushes = document.getElementById("stats-pushes");
 // Shorts for hit and stay buttons
 const hitBtn = document.getElementById("hit-btn");
 const stayBtn = document.getElementById("stay-btn");
+// Special variable to check whether bet has been made.
 
 // ** Helper Functions **
 function checkAces(hand) {
@@ -150,7 +151,6 @@ export function Hit(target) {
 
 // Reset function if hand has a conclusion
 export function InitializeHand() {
-  console.log(player.bet);
   let cardClass;
   let secondClass;
   hitBtn.classList.remove("hide-btn");
@@ -182,30 +182,39 @@ export function InitializeHand() {
   player.hand.length = 0;
   dealer.hand.length = 0;
   // Draw two new cards for both
-  while (player.hand.length < 2 && dealer.hand.length < 2) {
-    if (player.hand.length < 2) {
-      player.hand.push(newDeck.deal());
-      document.getElementById("player-cards").innerHTML = player.hand
-        .map((card) => {
-          let cardClass = `${card.cardType.toLowerCase()}${card.cardSuit[0]}`;
-          return `<div class='pcard-${cardClass}'>` + "" + `</div>`;
-        })
-        .join("");
+  if (player.bet > 0) {
+    while (player.hand.length < 2 && dealer.hand.length < 2) {
+      if (player.hand.length < 2) {
+        player.hand.push(newDeck.deal());
+        document.getElementById("player-cards").innerHTML = player.hand
+          .map((card) => {
+            let cardClass = `${card.cardType.toLowerCase()}${card.cardSuit[0]}`;
+            return `<div class='pcard-${cardClass}'>` + "" + `</div>`;
+          })
+          .join("");
+      }
+      if (dealer.hand.length < 2) {
+        dealer.hand.push(newDeck.deal());
+        document.getElementById("dealer-cards").innerHTML = dealer.hand
+          .map((card, index) => {
+            if (index === 0) {
+              cardClass = `${card.cardType.toLowerCase()}${card.cardSuit[0]}`;
+              return `<div class='pcard-back'>` + "" + `</div>`;
+            } else {
+              secondClass = `${card.cardType.toLowerCase()}${card.cardSuit[0]}`;
+              return `<div class='pcard-${secondClass}'>` + "" + `</div>`;
+            }
+          })
+          .join("");
+      }
     }
-    if (dealer.hand.length < 2) {
-      dealer.hand.push(newDeck.deal());
-      document.getElementById("dealer-cards").innerHTML = dealer.hand
-        .map((card, index) => {
-          if (index === 0) {
-            cardClass = `${card.cardType.toLowerCase()}${card.cardSuit[0]}`;
-            return `<div class='pcard-back'>` + "" + `</div>`;
-          } else {
-            secondClass = `${card.cardType.toLowerCase()}${card.cardSuit[0]}`;
-            return `<div class='pcard-${secondClass}'>` + "" + `</div>`;
-          }
-        })
-        .join("");
-    }
+  } else {
+    document.getElementById("player-message").innerHTML = "";
+    document.getElementById("dealer-message").innerHTML = "";
+    document.getElementById("dealer-count").innerHTML = "";
+    document.getElementById("player-count").innerHTML = "";
+    document.getElementById("dealer-cards").innerHTML = "";
+    document.getElementById("player-cards").innerHTML = "Please make a bet";
   }
   // Handle cases where two aces are dealt right off the bat
   checkAces(player.hand);
@@ -223,7 +232,7 @@ export function InitializeHand() {
   document.getElementById("player-message").innerHTML = "";
   // Check if User has blackjack
   if (playerCount === 21 && dealerCount !== 21) {
-    player.win();
+    player.blackjack();
     statWins.innerHTML = player.wins;
     document.getElementById(
       "player-bankroll"

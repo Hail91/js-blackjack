@@ -48,6 +48,11 @@ class Player {
     this.losses += 1;
     this.bet = 0;
   }
+  blackjack() {
+    this.bankroll += this.bet * 2.5;
+    this.wins += 1;
+    this.bet = 0;
+  }
 }
 
 export default Player;
