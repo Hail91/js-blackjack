@@ -150,7 +150,7 @@ export function Hit(target) {
 
 // Reset function if hand has a conclusion
 export function InitializeHand() {
-  reset();
+  console.log(player.bet);
   let cardClass;
   let secondClass;
   hitBtn.classList.remove("hide-btn");
@@ -225,6 +225,9 @@ export function InitializeHand() {
   if (playerCount === 21 && dealerCount !== 21) {
     player.win();
     statWins.innerHTML = player.wins;
+    document.getElementById(
+      "player-bankroll"
+    ).innerHTML = `Bankroll: $${player.bankroll}`;
     document.getElementById("player-message").innerHTML =
       "Blackjack! Player wins!";
     hitBtn.className = "hide-btn";
@@ -237,6 +240,9 @@ export function InitializeHand() {
     document.getElementById(
       "dealer-cards"
     ).firstChild.className = `pcard-${cardClass}`;
+    document.getElementById(
+      "player-bankroll"
+    ).innerHTML = `Bankroll: $${player.bankroll}`;
     document.getElementById("dealer-message").innerHTML =
       "Blackjack! Dealer wins!";
     hitBtn.className = "hide-btn";
@@ -246,6 +252,9 @@ export function InitializeHand() {
   if (playerCount === 21 && dealerCount === 21) {
     player.push();
     statPushes.innerHTML = player.pushes;
+    document.getElementById(
+      "player-bankroll"
+    ).innerHTML = `Bankroll: $${player.bankroll}`;
     document.getElementById("player-message").innerHTML = "Push!";
     document.getElementById("dealer-message").innerHTML = "Push!";
     hitBtn.className = "hide-btn";
