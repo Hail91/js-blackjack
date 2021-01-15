@@ -1,4 +1,3 @@
-// Player logic here
 ("use strict");
 class Player {
   constructor(name) {
@@ -17,34 +16,27 @@ class Player {
       })
       .reduce((a, b) => a + b);
   }
-  // Update bet amount, will be triggered onClick of bet buttons in UI
   updateBet(amount) {
-    if (this.bankroll >= amount && !(this.bankroll - amount < 0)) {
-      // Update player bet so we can track on UI
+    if (this.bankroll >= amount) {
       this.bet += amount;
       this.bankroll -= amount;
-      // Reduce current bankroll accordingly
-    }
+    } else alert("Not enough money!");
   }
-  // Will add a reset bet function as well to keep that functionality contained with the class
   resetBet() {
     this.bankroll += this.bet;
     this.bet = 0;
   }
-  // Method to increment player bankroll if player wins
   win() {
     this.bankroll += this.bet * 2;
     this.wins += 1;
     this.bet = 0;
   }
-  // Method for player push
   push() {
     this.bankroll += this.bet;
     this.pushes += 1;
     this.bet = 0;
   }
   lose() {
-    // Need to decrement from bankroll here, but need to figure out how to wait to deal cards until AFTER a bet is made.
     this.losses += 1;
     this.bet = 0;
   }
@@ -52,6 +44,15 @@ class Player {
     this.bankroll += this.bet * 2.5;
     this.wins += 1;
     this.bet = 0;
+  }
+  checkAces(hand) {
+    if (hand.every((el) => el.cardType === "A")) {
+      hand.map((card) => {
+        if (card.cardType === "A") {
+          card.cardValue = 1;
+        }
+      });
+    }
   }
 }
 

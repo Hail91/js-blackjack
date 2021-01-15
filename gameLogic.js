@@ -1,33 +1,28 @@
 "use strict";
-// Need to bring in Player and Dealer.
 import Deck from "./scripts/deck.js";
 import Dealer from "./scripts/dealer.js";
 import Player from "./scripts/player.js";
 
-// Create Deck
+// Initialize Deck
 const newDeck = new Deck();
-// Shuffle Deck
 newDeck.shuffle();
+
 // Initialize Player and Dealer
 const dealer = new Dealer();
 const player = new Player("player");
-// Create Button to reset and deal new hand
-let nextHandBtn = document.createElement("button");
-nextHandBtn.setAttribute("id", "next-hand");
-nextHandBtn.setAttribute("class", "next-hand-btn");
-nextHandBtn.innerHTML = "Start";
-nextHandBtn.addEventListener("click", InitializeHand);
-let playerCont = document.getElementsByClassName("player-container")[0];
-playerCont.appendChild(nextHandBtn);
 
-// Shorthands to access Statistcs elements
+// Selectors to access Statistics elements
 const statLosses = document.getElementById("stats-losses");
 const statWins = document.getElementById("stats-wins");
 const statPushes = document.getElementById("stats-pushes");
-// Shorts for hit and stay buttons
+
+// Selectors for hit and stay buttons
 const hitBtn = document.getElementById("hit-btn");
 const stayBtn = document.getElementById("stay-btn");
-// Special variable to check whether bet has been made.
+
+// Player Selectors
+const playerBet = document.getElementById("player-bet");
+const playerBankroll = document.getElementById("player-bankroll");
 
 // ** Helper Functions **
 function checkAces(hand) {
@@ -42,10 +37,8 @@ function checkAces(hand) {
 // ** Bet logic functions **
 export function makeBet(amount) {
   player.updateBet(amount);
-  document.getElementById("player-bet").innerHTML = `Bet: $${player.bet}`;
-  document.getElementById(
-    "player-bankroll"
-  ).innerHTML = `Bankroll:  $${player.bankroll}`;
+  playerBet.innerHTML = `Bet: $${player.bet}`;
+  playerBankroll.innerHTML = `Bankroll:  $${player.bankroll}`;
 }
 
 export function reset() {
@@ -269,5 +262,4 @@ export function InitializeHand() {
     hitBtn.className = "hide-btn";
     stayBtn.className = "hide-btn";
   }
-  document.getElementsByClassName("game-start-btn")[0].style.display = "none";
 }
