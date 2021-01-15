@@ -24,16 +24,6 @@ const stayBtn = document.getElementById("stay-btn");
 const playerBet = document.getElementById("player-bet");
 const playerBankroll = document.getElementById("player-bankroll");
 
-// ** Helper Functions **
-function checkAces(hand) {
-  if (hand.every((el) => el.cardType === "A")) {
-    hand.map((card) => {
-      if (card.cardType === "A") {
-        card.cardValue = 1;
-      }
-    });
-  }
-}
 // ** Bet logic functions **
 export function makeBet(amount) {
   player.updateBet(amount);
@@ -210,9 +200,9 @@ export function InitializeHand() {
     document.getElementById("player-cards").innerHTML = "Please make a bet";
   }
   // Handle cases where two aces are dealt right off the bat
-  checkAces(player.hand);
+  player.checkAces(player.hand);
   // repeat for dealer hand
-  checkAces(dealer.hand);
+  dealer.checkAces(dealer.hand);
   // Get hand count for both and render
   let dealerCount = dealer.handSum();
   let playerCount = player.handSum();

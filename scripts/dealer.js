@@ -3,13 +3,21 @@ class Dealer {
     this.name = "dealer";
     this.hand = [];
   }
-  // Get total value of current hand
   handSum() {
     return this.hand
       .map((card) => {
         return card.cardValue;
       })
       .reduce((a, b) => a + b);
+  }
+  checkAces(hand) {
+    if (hand.every((el) => el.cardType === "A")) {
+      hand.map((card) => {
+        if (card.cardType === "A") {
+          card.cardValue = 1;
+        }
+      });
+    }
   }
 }
 
